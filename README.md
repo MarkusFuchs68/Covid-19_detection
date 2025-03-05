@@ -9,4 +9,7 @@ or create the masked images yourself by executing '1 - masking.ipynb'
 * ./notebooks -> the notebooks used to develop this model
 
 ### pipenv
-* use "pipenv install \<library\>" instead of "pip install ...", pipenv automatically updates the Pipfile dependencies
+We use pipenv for managing installed python libraries
+* run 'pip install pipenv' to install pipenv, if not done yet
+* create a virtual environment with 'pipenv install' (note: this repo initially created with python 3.9.6)
+* use "pipenv install \<library\>" instead of "pip install ..." in order to install python libraries, pipenv automatically updates the Pipfile dependencies
