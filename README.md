@@ -7,3 +7,6 @@ In this repository we collaborate on the Covid-19 detection project, which devel
 * ./dataset -> (gitignored) folder with the masked images dataset, either download it from here: https://drive.google.com/file/d/15T4543kcKJX6CzTcFfGGIqwHhSJmA_vM/view?usp=drive_link
 or create the masked images yourself by executing '1 - masking.ipynb'
 * ./notebooks -> the notebooks used to develop this model
+
+### pipenv
+* use "pipenv install \<library\>" instead of "pip install ...", pipenv automatically updates the Pipfile dependencies
