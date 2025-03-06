@@ -1,6 +1,9 @@
 # tensorflow
 *.keras
 *.h5
+COVID-19_Radiography_Dataset/
+dataset/
+*.png
 
 # ---> Python
 # Byte-compiled / optimized / DLL files

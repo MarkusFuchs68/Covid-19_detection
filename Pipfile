@@ -18,8 +18,8 @@ markdown = "*"
 tensorflow = "*"
 xgboost = "*"
 ipykernel = "*"
-selenium = "*"
-webdriver-manager = "*"
+kagglehub = "*"
+imblearn = "*"
 
 [dev-packages]
 
