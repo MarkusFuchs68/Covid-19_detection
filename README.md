@@ -12,3 +12,4 @@ We use pipenv for managing installed python libraries
 * run 'pip install pipenv' to install pipenv, if not done yet
 * create a virtual environment with 'pipenv install' (note: there is no recommended python version to ensure compatibility over many operating systems, everything above 3.9 should be fine)
 * use "pipenv install \<library\>" instead of "pip install ..." in order to install python libraries, pipenv automatically updates the Pipfile dependencies
+* run "pipenv install", whenever a change to Pipfile has been made in order to update your environment.
