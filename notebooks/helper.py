@@ -83,3 +83,31 @@ def report_model_performance(y_true, y_pred, class_names):
     report['classification_report'] = df_cr
     report['confusion_matrix'] = cnf_matrix
     return report
+
+
+# Function to extract model summary as a DataFrame
+def model_summary_to_df(model):
+    import io
+    
+    # Redirect sys.stdout to capture model.summary() output
+    stream = io.StringIO()
+    
+    # Redirect Keras summary output to a variable
+    model.summary(print_fn=lambda x: stream.write(x + "\n"))
+    summary_str = stream.getvalue()
+    
+    # Parse summary output
+    lines = summary_str.split("\n")
+    data = []
+    for line in lines[2:-4]:  # Skip headers and footer
+        parts = [x for x in line.split("│") if x]  # Split by │ and remove empty elements
+        if len(parts) >= 3:
+            layer_nametype = parts[0]
+            output_shape = parts[1]
+            param_count = parts[-1]
+            data.append([layer_nametype, output_shape, param_count])
+    
+    # Create DataFrame
+    df = pd.DataFrame(data, columns=["Layer Name (type)", "Output Shape", "Param Count"])
+    return df
+
