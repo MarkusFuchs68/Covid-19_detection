@@ -5,11 +5,22 @@ In this repository we collaborate on the Covid-19 detection project, which devel
 
 ### Download Initial Data
 
+This project uses the original dataset from kaggle, you need to download it from here: https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database/data. 
+
+Either manually by yourself:
 ```
 curl -L -o covid19-radiography-database.zip \
     https://www.kaggle.com/api/v1/datasets/download/tawsifurrahman/covid19-radiography-databas
 unzip covid19-radiography-database.zip
 ```
+or by executing the preparation notebook, which downloads it automatically:
+```
+./notebooks/0 - preparations.ipynb
+```
+furtheron all notebooks/code is expecting the original dataset in (.gitignored) folder:
+
+./COVID-19_Radiography_Dataset
+
 
 ### Docker
 ```
@@ -24,8 +35,8 @@ docker compose -f docker-compose-gpu.yaml up
 
 Open [backend](http://localhost:8888) in browser. Make sure, that nothing blocks port 8888 (!).
 
-### This repo holds the following folders:
-* ./COVID-19_Radiography_Dataset -> (gitignored) original dataset from kaggle, you need to download it from here: https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database/data
+### Folder structure
+* ./COVID-19_Radiography_Dataset -> the downloaded (gitignored) original x-ray-image dataset
 * ./dataset -> (gitignored) folder with the masked images dataset, either download it from here: https://drive.google.com/file/d/15T4543kcKJX6CzTcFfGGIqwHhSJmA_vM/view?usp=drive_link
 or create the masked images yourself by executing '1 - masking.ipynb'
 * ./notebooks -> the notebooks used to develop this model
