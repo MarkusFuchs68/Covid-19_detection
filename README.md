@@ -47,3 +47,12 @@ We use pipenv for managing installed python libraries
 * create a virtual environment with 'pipenv install' (note: there is no recommended python version to ensure compatibility over many operating systems, everything above 3.9 should be fine)
 * use "pipenv install \<library\>" instead of "pip install ..." in order to install python libraries, pipenv automatically updates the Pipfile dependencies
 * run "pipenv install", whenever a change to Pipfile has been made in order to update your environment.
+
+### Notebooks
+* notebooks/0 - preparations.ipynb: downloads the original dataset from kaggle
+* notebooks/0a - inspection.ipynb: first inspection of the dataset and display of example images of all classes
+* notebooks/1 - masking.ipynb: generation of masked x-ray images by overlaying the masks on the x-ray images, saved in ./dataset folder
+* notebooks/2 - modelling.ipynb: first quick model on a reduced dataset for experimenting
+* notebooks/2*: further notebooks with different models, each including the learning curve, the model performance and confustion matrix report
+* notebooks/3 - experiments.ipynb: having a deeper look into the models from 2*-notebooks in order to visually understand, what happens on the convolutional layers
+* notebooks/3*: more models with adapted strategies (= learnings from 2*-notebooks)
