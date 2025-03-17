@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 
@@ -9,7 +10,96 @@ from imblearn.metrics import classification_report_imbalanced
 
 import tensorflow as tf
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Conv2D 
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.utils import image_dataset_from_directory
+
+
+def read_xray_images(folder_path, batch_size=32, input_shape=(224,224)):
+    # Rather small batch_size of 32 for fine grained learning rate, if not other specified
+    # Resize it implicitely for our model to (224,224) if not other specified
+
+    # Load the dataset with validation split
+    train_ds, val_ds = image_dataset_from_directory(
+        folder_path,
+        label_mode="int",      # for sparse_categorical_entropy training
+        batch_size=batch_size,
+        image_size=input_shape,
+        validation_split=0.2,  # 20% for validation
+        subset="both",         # Specify subset for training and validation to be created
+        seed=42                # Ensure reproducibility
+    )
+
+    # Check, which class names found (should be our 4 (or less for trials)) and save it for later use
+    class_names = train_ds.class_names.copy()
+    print('Found classes:', class_names)
+
+    # Optionally, you can cache and prefetch for performance
+    train_ds = train_ds.cache().prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+    val_ds = val_ds.cache().prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+
+    # Verify the datasets
+    for images, labels in train_ds.take(1):
+        print("Train dataset batch:", images.shape, labels.shape)
+        print('Labels', labels.numpy())
+
+    for images, labels in val_ds.take(1):
+        print("Validation dataset batch:", images.shape, labels.shape)
+        print('Labels', labels.numpy())
+
+    return train_ds, val_ds, class_names
+
+
+def read_only_xray_images(batch_size=32, input_shape=(224,224)):
+    # Manually gather only the 'images' subfolders for each class
+    # in order to do this, we must temporarily move the masks away from the images
+    TMP_FOLDER = 'tmp_' + str(np.random.randint(1e9))
+    MASK_FOLDER = 'masks'
+
+    # Parent folder
+    parent_folder = os.path.dirname(os.getcwd())
+    # COVID-19_Radiography_Dataset folder
+    COVID_FOLDER = 'COVID-19_Radiography_Dataset'
+    folder_path = os.path.join(parent_folder, COVID_FOLDER)
+    tmp_folder_path = os.path.join(parent_folder, TMP_FOLDER)
+
+    # Prepare to move each masks subfolder temporarily away
+    folder_moves_dict = {os.path.join(folder_path, class_name, MASK_FOLDER):
+                         os.path.join(parent_folder, TMP_FOLDER, class_name, MASK_FOLDER)
+                for class_name in os.listdir(folder_path) 
+                if os.path.isdir(os.path.join(folder_path, class_name, MASK_FOLDER))}
+
+    # Check if tmp-folder exists and create if not
+    tmp_exists = os.path.isdir(tmp_folder_path)
+    if False == tmp_exists:
+        os.makedirs(tmp_folder_path, exist_ok=True)
+        print(f"Created empty directory: {tmp_folder_path}")
+
+    # Move away the masks to tmp-folder
+    for move_from, move_to in folder_moves_dict.items():
+        # Create the masks' parent directory
+        os.makedirs(move_to[:-len(MASK_FOLDER)], exist_ok=True)
+        print('Made directory:', move_to[:-len(MASK_FOLDER)])
+        # Move the entire directory (actually by just renaming)
+        os.rename(move_from, move_to)
+        print(f"Moved {move_from} to {move_to}")
+
+    # Read in the images
+    train_ds, val_ds, class_names = read_xray_images(folder_path)
+
+    # Move back the masks again and clean the tmp-folder
+    for move_to, move_from in folder_moves_dict.items(): # reverse order!
+        # Move the entire directory back
+        os.rename(move_from, move_to)
+        print(f"Moved {move_from} to {move_to}")
+
+    # If the tmp folder hasn't existed before, delete it again
+    if False == tmp_exists: # it hasn't existed before
+        for dir in os.listdir(tmp_folder_path):
+            os.rmdir(os.path.join(tmp_folder_path,dir))
+        os.rmdir(tmp_folder_path)
+        print(f"Deleted empty directory: {tmp_folder_path}")
+
+    return train_ds, val_ds, class_names
 
 
 def plot_learning_curve(history_model, loss='loss', metric='accuracy'):
