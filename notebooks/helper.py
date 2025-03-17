@@ -83,6 +83,12 @@ def read_only_xray_images(batch_size=32, input_shape=(224,224)):
         os.rename(move_from, move_to)
         print(f"Moved {move_from} to {move_to}")
 
+    # Double check, that all masks have been temporarily removed from the training data
+    for move_from, _ in folder_moves_dict.items():
+        if os.path.isdir(move_from):
+            raise RuntimeError(f"Error: Masked files have not been correctly removed! \
+                               Found: {move_from}. Manual restoring of original dataset probably necessary!")
+
     # Read in the images
     train_ds, val_ds, class_names = read_xray_images(folder_path)
 
