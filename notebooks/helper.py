@@ -33,9 +33,9 @@ def read_xray_images(folder_path, batch_size=32, input_shape=(224,224)):
     class_names = train_ds.class_names.copy()
     print('Found classes:', class_names)
 
-    # Optionally, you can cache and prefetch for performance
-    train_ds = train_ds.cache().prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
-    val_ds = val_ds.cache().prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+    # Optionally, you can cache and prefetch for performance, but takes high RAM usage!
+    #train_ds = train_ds.cache().prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+    #val_ds = val_ds.cache().prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
 
     # Verify the datasets
     for images, labels in train_ds.take(1):
@@ -106,6 +106,33 @@ def read_only_xray_images(batch_size=32, input_shape=(224,224)):
         print(f"Deleted empty directory: {tmp_folder_path}")
 
     return train_ds, val_ds, class_names
+
+
+# Function to extract model summary as a DataFrame
+def model_summary_to_df(model):
+    import io
+
+    # Redirect sys.stdout to capture model.summary() output
+    stream = io.StringIO()
+
+    # Redirect Keras summary output to a variable
+    model.summary(print_fn=lambda x: stream.write(x + "\n"))
+    summary_str = stream.getvalue()
+
+    # Parse summary output
+    lines = summary_str.split("\n")
+    data = []
+    for line in lines[2:-4]:  # Skip headers and footer
+        parts = [x for x in line.split("│") if x]  # Split by │ and remove empty elements
+        if len(parts) >= 3:
+            layer_nametype = parts[0]
+            output_shape = parts[1]
+            param_count = parts[-1]
+            data.append([layer_nametype, output_shape, param_count])
+
+    # Create DataFrame
+    df = pd.DataFrame(data, columns=["Layer Name (type)", "Output Shape", "Param Count"])
+    return df
 
 
 def plot_learning_curve(history_model, loss='loss', metric='accuracy'):
@@ -183,33 +210,6 @@ def report_model_performance(y_true, y_pred, class_names):
     report['classification_report'] = df_cr
     report['confusion_matrix'] = cnf_matrix
     return report
-
-
-# Function to extract model summary as a DataFrame
-def model_summary_to_df(model):
-    import io
-
-    # Redirect sys.stdout to capture model.summary() output
-    stream = io.StringIO()
-
-    # Redirect Keras summary output to a variable
-    model.summary(print_fn=lambda x: stream.write(x + "\n"))
-    summary_str = stream.getvalue()
-
-    # Parse summary output
-    lines = summary_str.split("\n")
-    data = []
-    for line in lines[2:-4]:  # Skip headers and footer
-        parts = [x for x in line.split("│") if x]  # Split by │ and remove empty elements
-        if len(parts) >= 3:
-            layer_nametype = parts[0]
-            output_shape = parts[1]
-            param_count = parts[-1]
-            data.append([layer_nametype, output_shape, param_count])
-
-    # Create DataFrame
-    df = pd.DataFrame(data, columns=["Layer Name (type)", "Output Shape", "Param Count"])
-    return df
 
 
 def show_feature_maps(model, image):
