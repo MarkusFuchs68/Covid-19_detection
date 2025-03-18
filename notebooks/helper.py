@@ -90,7 +90,7 @@ def read_only_xray_images(batch_size=32, input_shape=(224,224)):
                                Found: {move_from}. Manual restoring of original dataset probably necessary!")
 
     # Read in the images
-    train_ds, val_ds, class_names = read_xray_images(folder_path)
+    train_ds, val_ds, class_names = read_xray_images(folder_path=folder_path, batch_size=batch_size, input_shape=input_shape)
 
     # Move back the masks again and clean the tmp-folder
     for move_to, move_from in folder_moves_dict.items(): # reverse order!
