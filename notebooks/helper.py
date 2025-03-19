@@ -317,6 +317,10 @@ def show_predict_image(img_name, img_decoded, models, class_names=['COVID', 'Lun
     # Predict with all models given
     for model_name, model in models.items():
 
+        # Make grayscale if model requires it
+        if model.input_shape[-1] == 1:
+          img_decoded = tf.image.rgb_to_grayscale(img_decoded) if img_decoded.shape[-1] == 3 else img_decoded  # Convert if needed
+
         # Resize according to the models input shape
         print(f'Resizing for model {model_name} to input_shape: {model.input_shape[1:3]}')
         img = tf.image.resize(img_decoded, size=model.input_shape[1:3])
