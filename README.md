@@ -56,3 +56,8 @@ We use pipenv for managing installed python libraries
 * [2*](./notebooks): further notebooks with different models, each including the learning curve, the model performance and confustion matrix report
 * [3 - experiments](./notebooks/3%20-%20experiments.ipynb): having a deeper look into the models from 2*-notebooks in order to visually understand, what happens on the convolutional layers
 * [3*](./notebooks): more models with adapted strategies (= learnings from 2*-notebooks)
+* [4*](./notebooks): finetuned models with adapted strategies (= learnings from 3*-notebooks)
+* [5 - predictions](./notebooks/5%20-%20predictions.ipynb): predictions and comparism made by the models on random images taken from the internet
+
+### Notes
+Due to its size on disk the models generated were saved on a private Google space, hence the notebook 5 with the predictions cannot be run from the repo, you must create the keras files by running the notebooks and copy them to your jupyter-notebooks folder.
