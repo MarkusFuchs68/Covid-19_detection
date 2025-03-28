@@ -21,6 +21,7 @@ ipykernel = "*"
 kagglehub = "*"
 imblearn = "*"
 openpyxl = "*"
+streamlit = "*"
 
 [dev-packages]
 
