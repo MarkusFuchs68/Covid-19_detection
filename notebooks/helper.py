@@ -291,7 +291,7 @@ def load_image_from_filepath(file_path):
     else:
         raise RuntimeError(f'File extension {ext} not supported.')
     
-    return img_decoded
+    return img_decoded.numpy()
 
 
 def load_image_from_url(url):
@@ -318,15 +318,18 @@ def show_predict_image(img_name, img_decoded, models, class_names=['COVID', 'Lun
     # Predict with all models given
     for model_name, model in models.items():
 
+        # Copy the image to avoid overwriting
+        img = img_decoded.copy()
+
         # Make grayscale if model requires it
+        print('Model input shape is:', model.input_shape)
         if model.input_shape[-1] == 1:
-          print('Model input shape is:', model.input_shape)
-          print(f'Converting image to grayscale for model {model_name}')
-          img_decoded = tf.image.rgb_to_grayscale(img_decoded) if img_decoded.shape[-1] == 3 else img_decoded  # Convert if needed
+            print(f'Converting image to grayscale for model {model_name}')
+            img = tf.image.rgb_to_grayscale(img) if img.shape[-1] == 3 else img  # Convert if needed
 
         # Resize according to the models input shape
         print(f'Resizing for model {model_name} to input_shape: {model.input_shape[1:3]}')
-        img = tf.image.resize(img_decoded, size=model.input_shape[1:3])
+        img = tf.image.resize(img, size=model.input_shape[1:3])
 
         # Predict using the provided model
         pred = model.predict(np.array([img], dtype=np.float32))[0]
