@@ -2,7 +2,7 @@ import os
 import shutil
 import kagglehub
 
-COVID_FOLDER_PATH = "COVID-19_Radiography_Dataset"
+COVID_FOLDER = "COVID-19_Radiography_Dataset"
 
 def download_and_move_dataset():
     # Create directories if they do not exist
