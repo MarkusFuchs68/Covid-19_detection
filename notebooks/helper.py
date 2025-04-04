@@ -137,6 +137,7 @@ def model_summary_to_df(model):
     return df
 
 
+# Display the learning curve of a model
 def plot_learning_curve(history_model, loss='loss', metric='accuracy'):
     plt.figure(figsize=(12, 4))
 
@@ -319,6 +320,8 @@ def show_predict_image(img_name, img_decoded, models, class_names=['COVID', 'Lun
 
         # Make grayscale if model requires it
         if model.input_shape[-1] == 1:
+          print('Model input shape is:', model.input_shape)
+          print(f'Converting image to grayscale for model {model_name}')
           img_decoded = tf.image.rgb_to_grayscale(img_decoded) if img_decoded.shape[-1] == 3 else img_decoded  # Convert if needed
 
         # Resize according to the models input shape
