@@ -10,6 +10,7 @@ def download_and_move_dataset():
     # Create directories if they do not exist
     if os.path.exists(dest_path):
         print("Dataset already exists.")
+        return
     else:
         print("Dataset not found. Downloading...")
 
