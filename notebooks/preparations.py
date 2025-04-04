@@ -15,5 +15,3 @@ def download_and_move_dataset():
     # Move dataset to parent directory
     shutil.move(os.path.join(path, 'COVID-19_Radiography_Dataset'), "..")
     print("Covid-19 Radiography Dataset downloaded and moved to parent directory.")
-
-download_and_move_dataset()
