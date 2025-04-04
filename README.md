@@ -37,9 +37,12 @@ Open [backend](http://localhost:8888) in browser. Make sure, that nothing blocks
 
 ### Folder structure
 * ./COVID-19_Radiography_Dataset -> the downloaded (gitignored) original x-ray-image dataset
-* ./dataset -> (gitignored) folder with the masked images dataset, either download it from here: https://drive.google.com/file/d/15T4543kcKJX6CzTcFfGGIqwHhSJmA_vM/view?usp=drive_link
+* ./dataset -> (gitignored) folder with the generated masked images dataset, either download it from [here](https://drive.google.com/file/d/15T4543kcKJX6CzTcFfGGIqwHhSJmA_vM/view?usp=drive_link)
 or create the masked images yourself by executing '1 - masking.ipynb'
-* [./notebooks](./notebooks) -> the notebooks used to develop this model
+* ./models -> (gitignored) folder with the trained models, download it from [here](https://drive.google.com/drive/folders/1_i8YZdClF5pnDEeyZL17IR5EAcqhEzUR)
+or create the masked images yourself by executing '1 - masking.ipynb'
+* [./notebooks](./notebooks) -> the notebooks used to develop this model, incl. reusable python scripts
+* [./streamlit](./streamlit) -> the accompanying streamlit application
 
 ### pipenv
 We use pipenv for managing installed python libraries
@@ -49,8 +52,7 @@ We use pipenv for managing installed python libraries
 * run "pipenv install", whenever a change to Pipfile has been made in order to update your environment.
 
 ### [Notebooks](./notebooks)
-* [0 - preparations](./notebooks/0%20-%20preparations.ipynb): downloads the original dataset from kaggle
-* [0a - inspection](./notebooks/0a%20-%20inspection.ipynb): first inspection of the dataset and display of example images of all classes
+* [0 - inspection](./notebooks/0%20-%20inspection.ipynb): first inspection of the dataset and display of example images of all classes
 * [1 - masking](./notebooks/1%20-%20masking.ipynb): generation of masked x-ray images by overlaying the masks on the x-ray images, saved in ./dataset folder
 * [2 - modelling](./notebooks/2%20-%20modelling.ipynb): first quick model on a reduced dataset for experimenting
 * [2*](./notebooks): further notebooks with different models, each including the learning curve, the model performance and confustion matrix report
@@ -60,4 +62,4 @@ We use pipenv for managing installed python libraries
 * [5 - predictions](./notebooks/5%20-%20prediction.ipynb): predictions and comparism made by the models on random images taken from the internet
 
 ### Notes
-Due to its size on disk the models generated were saved on a private Google space, hence the notebook 5 with the predictions cannot be run from the repo, you must create the keras files by running the notebooks and copy them to your jupyter-notebooks folder.
+Due to its size on disk the models generated were saved on a private Google space, hence the notebook 5 with the predictions cannot be run from the repo directly, you must first download the trained models from [here](https://drive.google.com/drive/folders/1_i8YZdClF5pnDEeyZL17IR5EAcqhEzUR) into the [models](./models) folder.

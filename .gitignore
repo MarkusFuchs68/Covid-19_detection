@@ -3,6 +3,7 @@
 *.h5
 COVID-19_Radiography_Dataset/
 dataset/
+models/
 *.png
 
 # ---> Python
