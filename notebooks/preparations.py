@@ -18,5 +18,5 @@ def download_and_move_dataset():
     path = kagglehub.dataset_download(handle="tawsifurrahman/covid19-radiography-database", force_download=True)
 
     # Move dataset to parent directory
-    shutil.copy(os.path.join(path, COVID_FOLDER), "..")
+    shutil.copytree(os.path.join(path, COVID_FOLDER), os.path.join("..", COVID_FOLDER))
     print("Covid-19 Radiography Dataset downloaded and moved to parent directory.")
