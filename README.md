@@ -13,9 +13,10 @@ curl -L -o covid19-radiography-database.zip \
     https://www.kaggle.com/api/v1/datasets/download/tawsifurrahman/covid19-radiography-databas
 unzip covid19-radiography-database.zip
 ```
-or by executing the preparation notebook, which downloads it automatically:
+or by executing
 ```
-./notebooks/0 - preparations.ipynb
+import preparations as prep
+prep.download_and_move_dataset()
 ```
 furtheron all notebooks/code is expecting the original dataset in (.gitignored) folder:
 
