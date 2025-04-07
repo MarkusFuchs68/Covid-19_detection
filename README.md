@@ -68,5 +68,5 @@ Due to its size on disk the models generated were saved on a private Google spac
 ### Streamlit App
 Run the streamlit app with:
 '''
-streamlit ./streamlit/covid19app.py
+streamlit run ./streamlit/covid19app.py
 '''
