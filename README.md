@@ -64,3 +64,9 @@ We use pipenv for managing installed python libraries
 
 ### Notes
 Due to its size on disk the models generated were saved on a private Google space, hence the notebook 5 with the predictions cannot be run from the repo directly, you must first download the trained models from [here](https://drive.google.com/drive/folders/1_i8YZdClF5pnDEeyZL17IR5EAcqhEzUR) into the [models](./models) folder.
+
+### Streamlit App
+Run the streamlit app with:
+'''
+streamlit ./streamlit/covid19app.py
+'''

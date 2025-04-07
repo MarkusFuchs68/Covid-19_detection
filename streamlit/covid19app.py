@@ -1,4 +1,5 @@
 import streamlit as st
+
 st.title('Covid-19 Data Analysis')
 st.write('This is a simple Streamlit app to analyze Covid-19 data.')
 if st.checkbox('Display Data'):
