@@ -57,7 +57,7 @@ def download_models():
 
 # The streamlit app code:
 st.title('Covid-19 Data Analysis')
-st.write('This is a simple Streamlit app to analyze Covid-19 chest X-ray images.')
+st.write('This is a simple Streamlit app to analyze Covid-19 chest X-ray images by various predefined models.')
 
 st.sidebar.title('Navigation')
 pages = ['Retrieve models', 'Model selection', 'Prediction']
