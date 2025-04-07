@@ -8,11 +8,9 @@ import seaborn as sns
 import tensorflow as ts
 
 import os
-import sys
-# We need this in order to import the st_prediction module on streamlit community cloud
-# to be able to import the prediction.py file from the streamlit folder
-sys.path.append(os.path.join(os.getcwd(), 'streamlit'))
 import st_prediction as pred
+import importlib
+importlib.reload(pred)
 
 
 # Definitions
