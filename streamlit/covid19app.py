@@ -10,7 +10,7 @@ import tensorflow as ts
 import os
 import sys
 # We need this in order to import the st_prediction module on streamlit community cloud
-sys.path.append(os.path.join(os.path.dirname('st_prediction.py'), '..', 'streamlit'))
+sys.path.append(os.path.join(os.getcwd(), 'streamlit'))
 import st_prediction as pred
 # Causes a reload of the module, so we can see the changes in the code without restarting the app
 import importlib
