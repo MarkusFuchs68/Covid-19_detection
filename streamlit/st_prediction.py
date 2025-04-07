@@ -83,7 +83,7 @@ def prepare_image_for_model(image, model_name, model):
 def predict_image(img_prepared, model_name, model, class_names):
 
     # Prepare the prediction report
-    model_pred = 'Model_Prediction'
+    model_pred = 'Class Prediction, Probabilities ->'
     pred_df = pd.DataFrame(columns=[model_pred] + class_names)
 
     # Predict using the provided model
@@ -91,6 +91,7 @@ def predict_image(img_prepared, model_name, model, class_names):
 
     # Show the probabilities of the predicted classes
     pred_df.loc[model_name] = [class_names[np.argmax(pred)]] + pred.round(3).tolist()
+    pred_df.index.name = 'Model'
 
     # Return the prediction report
     return pred_df

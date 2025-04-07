@@ -62,6 +62,7 @@ st.write('This is a simple Streamlit app to analyze Covid-19 chest X-ray images.
 st.sidebar.title('Navigation')
 pages = ['Retrieve models', 'Model selection', 'Prediction']
 page = st.sidebar.radio('Select a page:', pages)
+
 if page == 'Retrieve models':
     st.subheader('Retrieve models')
 
@@ -125,7 +126,7 @@ elif page == 'Prediction':
     classes = st.session_state['classes']
 
     st.write('Enter a URL of an X-ray image for prediction:')
-    image_url = st.text_input('Image URL:', default='https://content.ca.healthwise.net/resources/14.1/en-ca/media/medical/hw/h9991297_001.jpg')
+    image_url = st.text_input('Image URL:', value='https://content.ca.healthwise.net/resources/14.1/en-ca/media/medical/hw/h9991297_001.jpg')
     if not image_url:
         st.stop()
 
@@ -141,7 +142,7 @@ elif page == 'Prediction':
     # Predict using the model
     st.write('Predicting...')
     pred_df = pred.predict_image(img_prepared, model_name, model, classes)
-    st.write(pred_df)
+    st.dataframe(pred_df)
 
     st.write('Check the following checkbox to show a Grad-CAM of the prediction:')
     show_gradcam = st.checkbox('Show Grad-CAM')
