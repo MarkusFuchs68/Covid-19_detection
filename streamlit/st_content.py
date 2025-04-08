@@ -133,8 +133,7 @@ In order to approach the modeling process in a structured manner and to successi
 The individual models that we have tested are presented below. After a brief description of the general model properties and, where applicable, the underlying idea, the performance and all the key results of the model are then presented in tabular and graphical form. If special or interesting results can be observed, these are then briefly highlighted and commented on. A summarised overview of all the models listed is provided at the end of this model report.
 '''
 
-modelisation_json =
-'''
+modelisation_models = \
 {
     "models": [
         {
@@ -150,10 +149,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": true
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": True
         },
         {
             "name": "2_vgg16_2-classes_dense512_masked",
@@ -168,10 +167,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": true
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": True
         },
         {
             "name": "2a_vgg16_4-classes_dense512_masked",
@@ -186,10 +185,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": true
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": True
         },
         {
             "name": "3a_vgg16_dense512",
@@ -204,10 +203,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": False
         },
         {
             "name": "3b_vgg16_augmented_dense512",
@@ -222,10 +221,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": true,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": false
+            "data_augmentation": True,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": False
         },
         {
             "name": "3c_vgg16_dense128",
@@ -240,10 +239,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": False
         },
         {
             "name": "3d_efficientnetb1_dense128",
@@ -258,10 +257,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": false,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": False,
+            "masked": False
         },
         {
             "name": "4_25ep_medparam_4xconv2d_dense128",
@@ -276,10 +275,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": false,
-            "fine_tuning": false,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": False,
+            "fine_tuning": False,
+            "masked": False
         },
         {
             "name": "4_50ep_medparam_4xconv2d_dense128",
@@ -294,10 +293,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": false,
-            "fine_tuning": false,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": False,
+            "fine_tuning": False,
+            "masked": False
         },
         {
             "name": "4_preproc_effnetb1retrained_dense128",
@@ -312,10 +311,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": true,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": True,
+            "masked": False
         },
         {
             "name": "4_preproc_vgg16retrained_dense128",
@@ -330,10 +329,10 @@ modelisation_json =
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
-            "data_augmentation": false,
-            "transfer_learning": true,
-            "fine_tuning": true,
-            "masked": false
+            "data_augmentation": False,
+            "transfer_learning": True,
+            "fine_tuning": True,
+            "masked": False
         }
     ]
 }
