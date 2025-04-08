@@ -68,5 +68,6 @@ Due to its size on disk the models generated were saved on a private Google spac
 ### Streamlit App
 You can run the accompanying streamlit app locally with:
 ```
-streamlit run ./streamlit/covid19app.py
+cd streamlit
+streamlit run covid19app.py
 ```

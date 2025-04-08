@@ -4,7 +4,6 @@
 COVID-19_Radiography_Dataset/
 dataset/
 models/
-*.png
 
 # ---> Python
 # Byte-compiled / optimized / DLL files

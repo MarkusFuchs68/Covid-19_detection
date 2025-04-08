@@ -8,8 +8,10 @@ import seaborn as sns
 import tensorflow as ts
 
 import os
+import st_content as content
 import st_prediction as pred
 import importlib
+importlib.reload(content)
 importlib.reload(pred)
 
 
@@ -56,45 +58,73 @@ def download_models():
 
 
 # The streamlit app code:
-st.title('Covid-19 Data Analysis')
-st.write('This is a simple Streamlit app to analyze Covid-19 chest X-ray images by various predefined models.')
+st.title('Covid-19 chest X-ray image Analysis')
 
 st.sidebar.title('Navigation')
-pages = ['Retrieve models', 'Model selection', 'Prediction']
-page = st.sidebar.radio('Select a page:', pages)
+pages = ['Home', 'Analysis', 'Modelisation', 'Model selection', 'Prediction', 'About']
+page = st.sidebar.radio('Go to:', pages)
 
-if page == 'Retrieve models':
-    st.subheader('Retrieve models')
+if page == 'Home':
 
-    st.write('Current models available:')
-    if os.path.isdir('./models'):
-        model_list = os.listdir('./models')
-        model_names = [model_filename.split('.')[0] for model_filename in model_list if model_filename.endswith('.keras')]
-        model_names = sorted(model_names)
-        for model_filename in model_names:
-            st.write(model_filename)
+    st.markdown(content.home_general)
+    st.markdown(content.home_context)
+    st.markdown(content.home_samples)
+    st.markdown(content.home_normal)
+    st.image(os.path.join('content', 'normal.png'), caption='Healthy lungs')
+    st.markdown(content.home_viral_pneumonia)
+    st.image(os.path.join('content', 'viral_pneumonia.png'), caption='Viral pneumonia')
+    st.markdown(content.home_lung_opacity)
+    st.image(os.path.join('content', 'lung_opacity.png'), caption='Lung opacity')
+    st.markdown(content.home_covid)
+    st.image(os.path.join('content', 'covid.png'), caption='Covid-19')
 
-    st.write('Click the button below to download and update the available models.')
-    if st.button('Download models'):
+elif page == 'Analysis':
+
+    st.markdown(content.analysis_structure_1)
+    st.image(os.path.join('content', 'class_distribution.png'), caption='Class distribution')
+    st.markdown(content.analysis_structure_2)
+    st.markdown(content.analysis_masking)
+    st.image(os.path.join('content', 'masking.png'), caption='Image masking')
+    st.markdown(content.analysis_structure_3)
+    st.markdown(content.analysis_challenges)
+    st.markdown(content.analysis_biases)
+
+elif page == 'Modelisation':
+
+    st.markdown(content.modelisation)
+
+elif page == 'Model selection':
+
+    # Always offer the download or update of the models
+    if st.button('Download/update models'):
         # We download the models from our Google Drive
         st.write('Downloading models from Google Drive...')
         st.write('Please wait...')
         download_models()
-        st.write('Models downloaded successfully. Please refresh the page to see the models.')
+        st.write('Models downloaded successfully. Refreshing page...')
+        st.rerun()
 
-elif page == 'Model selection':
-    st.subheader('Model Selection')
     st.write('Select a model to use for prediction:')
-    model_list = os.listdir('./models')
+    st.write('Current models available:')
+    # Check if the models folder exists
+    if os.path.isdir(MODEL_FOLDER):
+        model_list = os.listdir(MODEL_FOLDER)
+        model_names = [model_filename.split('.')[0] for model_filename in model_list if model_filename.endswith('.keras')]
+        model_names = sorted(model_names)
+        df_models = pd.DataFrame(model_names, columns=['Model'])
+        st.dataframe(df_models)
+    else:
+        st.error('No models available. Please download models first.')
+        st.stop()
+
+    # List all models in the models folder
     model_names = [model_filename.split('.')[0] for model_filename in model_list if model_filename.endswith('.keras')]
     model_names = sorted(model_names)
-    if st.session_state.get('model_name'):
-        selected_model = st.session_state['model_name']
-    else:
-        selected_model = model_names[0] if model_names else None
-    selected_model = st.selectbox('Select a model:', model_names, index=model_names.index(selected_model) if selected_model in model_names else 0)
+    selected_model = st.session_state.get('model_name') # Returns None, if never selected
+
+    # and let the user select one or preset it with the last selected one
+    selected_model = st.selectbox('Select a model:', model_names, index=model_names.index(selected_model) if selected_model in model_names else None)
     if selected_model is None:
-        st.error('No models available. Please download models first.')
         st.stop()
 
     st.write(f'You selected: {selected_model}')
@@ -112,9 +142,7 @@ elif page == 'Model selection':
     st.session_state['model'] = model
     st.session_state['classes'] = classes
 
-
 elif page == 'Prediction':
-    st.subheader('Prediction')
 
     # First check if we have models loaded
     if 'model' not in st.session_state:
@@ -148,3 +176,7 @@ elif page == 'Prediction':
     show_gradcam = st.checkbox('Show Grad-CAM')
     if show_gradcam:
         pred.show_feature_maps(img_prepared, model_name, model)
+
+elif page == 'About':
+
+    st.markdown(content.about)
