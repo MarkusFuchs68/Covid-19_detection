@@ -42,7 +42,9 @@ def model_summary_to_df(model):
 
 def load_image_from_file(uploaded_file):
     image_raw = Image.open(uploaded_file)
-    image_raw = image_raw.convert('RGB')  # Convert to RGB if not already
+    # Convert to grayscale, because all our models are trained on grayscale images
+    image_raw = image_raw.convert("L")  # Single-channel grayscale
+    image_raw = image_raw.convert('RGB')  # Convert back to RGB for model compatibility
     image_decoded = np.array(image_raw)
     return image_decoded
 
@@ -75,7 +77,7 @@ def prepare_image_for_model(image, model_name, model):
 def predict_image(img_prepared, model_name, model, class_names):
 
     # Prepare the prediction report
-    model_pred = 'Predicted class | Probas:'
+    model_pred = 'Predicted class'
     pred_df = pd.DataFrame(columns=[model_pred] + class_names)
 
     # Predict using the provided model

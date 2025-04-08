@@ -91,6 +91,8 @@ elif page == 'Analysis':
 
 elif page == 'Modelisation':
 
+    st.markdown(content.modelisation_intro)
+
     '''
     # Show the models in a table
     st.write('Available models:')
@@ -98,7 +100,6 @@ elif page == 'Modelisation':
     st.dataframe(df_models)
     '''
 
-    st.markdown(content.modelisation)
 
 elif page == 'Model selection':
 
