@@ -14,7 +14,6 @@ import importlib
 importlib.reload(content)
 importlib.reload(pred)
 
-
 # Definitions
 classes_4 = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
 classes_2 = ['Normal', 'COVID']
@@ -93,13 +92,8 @@ elif page == 'Modelisation':
 
     st.markdown(content.modelisation_intro)
 
-    '''
-    # Show the models in a table
-    st.write('Available models:')
-    df_models = pd.DataFrame(model_names, columns=['Model'])
+    df_models = pd.DataFrame(content.modelisation_models['models'])
     st.dataframe(df_models)
-    '''
-
 
 elif page == 'Model selection':
 

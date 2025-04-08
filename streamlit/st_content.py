@@ -133,8 +133,7 @@ In order to approach the modeling process in a structured manner and to successi
 The individual models that we have tested are presented below. After a brief description of the general model properties and, where applicable, the underlying idea, the performance and all the key results of the model are then presented in tabular and graphical form. If special or interesting results can be observed, these are then briefly highlighted and commented on. A summarised overview of all the models listed is provided at the end of this model report.
 '''
 
-modelisation_models = \
-{
+modelisation_models = {
     "models": [
         {
             "name": "2_dense121_2-classes_dense512_masked",
