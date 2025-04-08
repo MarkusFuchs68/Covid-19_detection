@@ -136,6 +136,19 @@ modelisation = '''
 '''
 
 
+###############################
+### Prediction page content ###
+###############################
+
+prediction_note = '''
+*Note: please remove any uploaded image before entering an image URL*
+'''
+
+
+prediction_or = '''
+<div style='text-align: center; padding-top: 2em;'>OR</div>
+'''
+
 ##########################
 ### About page content ###
 ##########################

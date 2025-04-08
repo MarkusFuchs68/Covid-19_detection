@@ -91,6 +91,13 @@ elif page == 'Analysis':
 
 elif page == 'Modelisation':
 
+    '''
+    # Show the models in a table
+    st.write('Available models:')
+    df_models = pd.DataFrame(model_names, columns=['Model'])
+    st.dataframe(df_models)
+    '''
+
     st.markdown(content.modelisation)
 
 elif page == 'Model selection':
@@ -104,26 +111,24 @@ elif page == 'Model selection':
         st.write('Models downloaded successfully. Refreshing page...')
         st.rerun()
 
-    st.write('Select a model to use for prediction:')
-    st.write('Current models available:')
     # Check if the models folder exists
-    if os.path.isdir(MODEL_FOLDER):
-        model_list = os.listdir(MODEL_FOLDER)
-        model_names = [model_filename.split('.')[0] for model_filename in model_list if model_filename.endswith('.keras')]
-        model_names = sorted(model_names)
-        df_models = pd.DataFrame(model_names, columns=['Model'])
-        st.dataframe(df_models)
-    else:
+    if not os.path.isdir(MODEL_FOLDER):
         st.error('No models available. Please download models first.')
         st.stop()
 
-    # List all models in the models folder
+    # Load the models folder
+    model_list = os.listdir(MODEL_FOLDER)
     model_names = [model_filename.split('.')[0] for model_filename in model_list if model_filename.endswith('.keras')]
     model_names = sorted(model_names)
-    selected_model = st.session_state.get('model_name') # Returns None, if never selected
 
-    # and let the user select one or preset it with the last selected one
-    selected_model = st.selectbox('Select a model:', model_names, index=model_names.index(selected_model) if selected_model in model_names else None)
+    # Check if we have models in the folder
+    if len(model_names) == 0:
+        st.error('No models available. Please download models first.')
+        st.stop()
+
+    # Let the user select one or preset it with the last selected one
+    selected_model = st.session_state.get('model_name') # Returns None, if never selected
+    selected_model = st.selectbox('Select a model for prediction:', model_names, index=model_names.index(selected_model) if selected_model in model_names else None)
     if selected_model is None:
         st.stop()
 
@@ -153,25 +158,52 @@ elif page == 'Prediction':
     model = st.session_state['model']
     classes = st.session_state['classes']
 
-    st.write('Enter a URL of an X-ray image for prediction:')
-    image_url = st.text_input('Image URL:', value='https://content.ca.healthwise.net/resources/14.1/en-ca/media/medical/hw/h9991297_001.jpg')
-    if not image_url:
-        st.stop()
+    # Let the user choose between file upload or URL input
+    image = None
+    loading_type = 0
+    st.markdown(content.prediction_note)
+    url_input, divider, file_input = st.columns([3, 1, 3])
+    
+    with divider:
+        st.markdown(content.prediction_or, unsafe_allow_html=True)
 
-    st.write(f'You entered: {image_url}')
-    image = pred.load_image_from_url(image_url)
+    with url_input:
+        st.write('Enter a URL of an X-ray image for prediction:')
+        image_url = st.text_input('Image URL:', value='https://content.ca.healthwise.net/resources/14.1/en-ca/media/medical/hw/h9991297_001.jpg')
+        if image_url and image_url != '':
+            image = pred.load_image_from_url(image_url)
+            st.write(f'You entered: {image_url}')
+            loading_type = 1
+
+    with file_input:
+        st.write('Upload an X-ray image for prediction:')
+        uploaded_file = st.file_uploader('Choose an image...', type=['jpg', 'jpeg', 'png'])
+        if uploaded_file:
+            image = pred.load_image_from_file(uploaded_file)
+            st.write(f'You uploaded: {uploaded_file.name}')
+            loading_type = 2
 
     # Show the original image
-    st.image(image)
+    if image is None:
+        st.stop()
+
+    # Predict using the model
+    if loading_type == 1:
+        st.write('Predicting the following image from URL...')
+    elif loading_type == 2:
+        st.write('Predicting the following image from file...')
+
+    # Show the loaded image
+    st.image(image, width=300)
 
     # Prepare the image for prediction in the selected model
     img_prepared = pred.prepare_image_for_model(image, model_name, model)
 
-    # Predict using the model
-    st.write('Predicting...')
+    # Predict the prepared image
     pred_df = pred.predict_image(img_prepared, model_name, model, classes)
     st.dataframe(pred_df)
 
+    # Optionally show a Grad-CAM
     st.write('Check the following checkbox to show a Grad-CAM of the prediction:')
     show_gradcam = st.checkbox('Show Grad-CAM')
     if show_gradcam:

@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import urllib
 import cv2
+from PIL import Image
 import matplotlib.pyplot as plt
 
 import tensorflow as tf
@@ -39,22 +40,11 @@ def model_summary_to_df(model):
     return df
 
 
-# Note: the predefined class-names are the usual order, when reading in the dataset, but be careful!
-def load_image_from_filepath(file_path):
-    # Read the raw image
-    img_raw = tf.io.read_file(file_path)
-
-    # Check extension
-    _, ext = os.path.splitext(file_path)
-    img_decoded = None
-    if ext == '.jpg' or ext == '.jpeg':
-        img_decoded = tf.image.decode_jpeg(img_raw, channels = 3)
-    elif ext == '.png':
-        img_decoded = tf.image.decode_png(img_raw, channels = 3)
-    else:
-        raise RuntimeError(f'File extension {ext} not supported.')
-    
-    return img_decoded.numpy()
+def load_image_from_file(uploaded_file):
+    image_raw = Image.open(uploaded_file)
+    image_raw = image_raw.convert('RGB')  # Convert to RGB if not already
+    image_decoded = np.array(image_raw)
+    return image_decoded
 
 
 def load_image_from_url(url):
@@ -69,25 +59,28 @@ def prepare_image_for_model(image, model_name, model):
     img = image.copy()
 
     # Make grayscale if model requires it
-    st.write(f'Model input shape is: {model.input_shape}')
+#    st.write(f'Model input shape is: {model.input_shape}')
     if model.input_shape[-1] == 1:
         st.write(f'Converting image to grayscale for model {model_name}')
         img = tf.image.rgb_to_grayscale(img) if img.shape[-1] == 3 else img  # Convert if needed
 
     # Resize according to the models input shape
-    st.write(f'Resizing for model {model_name} to input_shape: {model.input_shape[1:3]}')
+#    st.write(f'Resizing for model {model_name} to input_shape: {model.input_shape[1:3]}')
     img = tf.image.resize(img, size=model.input_shape[1:3])
 
     return img
 
+
+# Note: the predefined class-names are the usual order, when reading in the dataset, but be careful!
 def predict_image(img_prepared, model_name, model, class_names):
 
     # Prepare the prediction report
-    model_pred = 'Class Prediction, Probabilities ->'
+    model_pred = 'Predicted class | Probas:'
     pred_df = pd.DataFrame(columns=[model_pred] + class_names)
 
     # Predict using the provided model
-    pred = model.predict(np.array([img_prepared], dtype=np.float32))[0]
+    img_batch = tf.expand_dims(img_prepared, axis=0)
+    pred = model.predict(img_batch)[0]
 
     # Show the probabilities of the predicted classes
     pred_df.loc[model_name] = [class_names[np.argmax(pred)]] + pred.round(3).tolist()
