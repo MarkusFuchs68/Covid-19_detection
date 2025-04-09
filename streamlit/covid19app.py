@@ -8,6 +8,11 @@ import seaborn as sns
 import tensorflow as ts
 
 import os
+import sys
+# Add the "streamlit" folder to the system path
+current_dir = os.path.dirname(__file__)
+sys.path.append(current_dir)
+
 import base64
 import st_content as content
 import st_prediction as pred
@@ -119,17 +124,18 @@ elif page == 'Modelisation':
     model_list = sorted(model_list)
     selected_model = st.session_state.get('model_detail') # Returns None, if never selected
     selected_model = st.selectbox('Select a model:', model_list, index=model_list.index(selected_model) if selected_model in model_list else None)
-    if selected_model is None:
-        st.stop()
-    st.session_state['model_detail'] = selected_model
+    if selected_model is not None:        
+        st.session_state['model_detail'] = selected_model
 
-    # We show the model description, the loss and accuracy curves, 
-    # the performance report on the validation dataset, and the confusion matrix
-    st.write(f'You selected: {selected_model}')
+        # We show the model description, the loss and accuracy curves, 
+        # the performance report on the validation dataset, and the confusion matrix
+        st.write(f'You selected: {selected_model}')
 
-    # We simply show the compiled PDF as the model report
-    pdf_filename = selected_model + '.pdf'
-    display_pdf(os.path.join('content', pdf_filename))
+        # We simply show the compiled PDF as the model report
+        pdf_filename = selected_model + '.pdf'
+        display_pdf(os.path.join('content', pdf_filename))
+
+    st.markdown(content.modelisation_learnings)
 
 elif page == 'Model selection':
 

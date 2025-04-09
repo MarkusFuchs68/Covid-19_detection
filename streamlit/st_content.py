@@ -487,6 +487,18 @@ After a brief description of the general model properties and, where applicable,
 *Note: The leading number of the model name reflects the evolution step during our project. The higher the leading number, the more insights learned from the previous models are included.*
 '''
 
+modelisation_learnings = '''
+## Key Learnings and Recommendations
+- Densenet121 is unsuitable for this project, even when using medical pretraining weights.
+- VGG16 shows robust performance, especially without image masking.
+- Masked images hinder model performance – the model mistakenly focuses on peripheral image areas rather than lung details.
+- Data augmentation must be applied more strategically – initial attempts led to overfitting and performance drops.
+- Smaller dense layers (e.g., 128) can perform better than larger ones (e.g., 512) when paired with an appropriate architecture.
+- Overfitting remains an issue – especially with models showing high training accuracy but significantly worse test performance.
+- Grad-CAM analyses are helpful for interpreting model decisions and identifying what regions the model focuses on.
+'''
+
+
 ###############################
 ### Prediction page content ###
 ###############################
