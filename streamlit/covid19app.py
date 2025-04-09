@@ -16,9 +16,10 @@ sys.path.append(current_dir)
 import base64
 import st_content as content
 import st_prediction as pred
-import importlib
-importlib.reload(content)
-importlib.reload(pred)
+# Comment this out, if you make changes to the files, while the app is running
+#import importlib
+#importlib.reload(content)
+#importlib.reload(pred)
 
 # Definitions
 classes_4 = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
