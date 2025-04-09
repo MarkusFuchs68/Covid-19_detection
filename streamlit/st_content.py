@@ -130,10 +130,66 @@ In order to approach the modeling process in a structured manner and to successi
 - Advanced Modeling: Transfer learning and fine-tuning.
 - Interpretation: Use interpretability tools to better understand your model’s results.
 
-The individual models that we have tested are presented below. After a brief description of the general model properties and, where applicable, the underlying idea, the performance and all the key results of the model are then presented in tabular and graphical form. If special or interesting results can be observed, these are then briefly highlighted and commented on. A summarised overview of all the models listed is provided at the end of this model report.
+A summary of the models that we have tested are presented below. You will find a brief description of the model, the parameters used and the results achieved. You can order the summary by any variable by clicking on the column header. Especially the columns 'covid_f1', 'covid_precision' and 'covid_recall' are of interest, as they show the performance of the model in detecting Covid-19. The higher the values, the better the model performed. The column 'average_f1' shows the average performance of the model across all classes. The higher the value, the better the model performed overall.
 '''
 
-modelisation_models = {
+modelisation_variables = '''
+| Variable          | Description       |
+|-------------------|-------------------|
+| name              | name of the model (the leading number reflects the sequence in our experimentation) |
+| description       | brief description of the model |
+| covid_f1          | COVID class f1 score |
+| covid_precision   | COVID class precision score (high precision: few false positives |
+| covid_recall      | COVID class recall score (high recall: few false negatives) |
+| average_f1        | average f1 score across all classes |
+| classes           | list of classes the model predicts |
+| preprocessing     | preprocessing applied to the images within the model |
+| data_augmentation | data augmentation applied during training |
+| transfer_learning | transfer learning applied by using the pretrained parameters |
+| fine_tuning       | fine-tuning applied by unfreezing the layers of the pretrained model |
+| masked            | masked images used for training |
+| dense_layers      | list of dense layers in the model |
+| dropout           | dropout rate applied between the dense layers |
+| epochs            | max number of epochs the model was trained |
+| early_stopping    | number of epochs the model training stopped after no more learning |
+| batch_size        | batch size used for training |
+| optimizer         | optimizer used for training |
+| learning_rate     | initial learning rate used for training, was reduced when plateau reached |
+| loss_function     | loss function used for training |
+| metrics           | metrics used for training |
+| total_params         | total number of parameters in the model |
+| trainable_params     | number of trainable parameters in the model |
+| non_trainable_params | number of non-trainable parameters in the model |
+'''
+
+modelisation_summary_columns = [
+            "name",
+            "description",
+            "covid_f1",
+            "covid_precision",
+            "covid_recall",
+            "average_f1",
+            "classes",
+            "preprocessing",
+            "data_augmentation",
+            "transfer_learning",
+            "fine_tuning",
+            "masked",
+            "dense_layers",
+            "dropout",
+            "epochs",
+            "early_stopping",
+            "batch_size",
+            "optimizer",
+            "learning_rate",
+            "loss_function",
+            "metrics",
+            "total_params",
+            "trainable_params",
+            "non_trainable_params",
+]
+
+modelisation_model_summary = {
     "models": [
         {
             "name": "2_dense121_2-classes_dense512_masked",
@@ -148,10 +204,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": True
+            "masked": True,
+            "covid_f1": 0.428,
+            "covid_precision": 0.273,
+            "covid_recall": 0.999,
+            "average_f1": 0.117,
+            "total_params": "8.612.930",
+            "trainable_params": "1.575.426",
+            "non_trainable_params": "7.037.504",
         },
         {
             "name": "2_vgg16_2-classes_dense512_masked",
@@ -166,10 +230,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": True
+            "masked": True,
+            "covid_f1": 0.840,
+            "covid_precision": 0.805,
+            "covid_recall": 0.880,
+            "average_f1": 0.910,
+            "total_params": "15.765.826",
+            "trainable_params": "1.051.138",
+            "non_trainable_params": "14.714.688",
         },
         {
             "name": "2a_vgg16_4-classes_dense512_masked",
@@ -184,10 +256,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": True
+            "masked": True,
+            "covid_f1": 0.752,
+            "covid_precision": 0.713,
+            "covid_recall": 0.797,
+            "average_f1": 0.853,
+            "total_params": "15.766.852",
+            "trainable_params": "1.052.164",
+            "non_trainable_params": "14.714.688",
         },
         {
             "name": "3a_vgg16_dense512",
@@ -202,10 +282,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.935,
+            "covid_precision": 0.933,
+            "covid_recall": 0.937,
+            "average_f1": 0.913,
+            "total_params": "15.766.852",
+            "trainable_params": "1.052.164",
+            "non_trainable_params": "14.714.688",
         },
         {
             "name": "3b_vgg16_augmented_dense512",
@@ -220,10 +308,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": True,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.517,
+            "covid_precision": 0.510,
+            "covid_recall": 0.523,
+            "average_f1": 0.618,
+            "total_params": "15.766.852",
+            "trainable_params": "1.052.164",
+            "non_trainable_params": "14.714.688",
         },
         {
             "name": "3c_vgg16_dense128",
@@ -238,10 +334,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.930,
+            "covid_precision": 0.924,
+            "covid_recall": 0.937,
+            "average_f1": 0.909,
+            "total_params": "15.371.716",
+            "trainable_params": "657.028",
+            "non_trainable_params": "14.714.688",
         },
         {
             "name": "3d_efficientnetb1_dense128",
@@ -256,10 +360,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": False,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": False,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.954,
+            "covid_precision": 0.959,
+            "covid_recall": 0.950,
+            "average_f1": 0.919,
+            "total_params": "8.018.699",
+            "trainable_params": "1.443.460",
+            "non_trainable_params": "6.575.239",
         },
         {
             "name": "4_25ep_medparam_4xconv2d_dense128",
@@ -274,14 +386,22 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": None,
             "data_augmentation": False,
             "transfer_learning": False,
             "fine_tuning": False,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.946,
+            "covid_precision": 0.934,
+            "covid_recall": 0.958,
+            "average_f1": 0.862,
+            "total_params": "2.206.852",
+            "trainable_params": "2.206.852",
+            "non_trainable_params": "0",
         },
         {
             "name": "4_50ep_medparam_4xconv2d_dense128",
-            "description": " model with imagenet pretrained weights",
+            "description": "4xConvolutional layer model with medical parameters",
             "dense_layers": [1024, 128, 4],
             "dropout": 0.2,
             "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
@@ -292,10 +412,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": None,
             "data_augmentation": False,
             "transfer_learning": False,
             "fine_tuning": False,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.947,
+            "covid_precision": 0.935,
+            "covid_recall": 0.961,
+            "average_f1": 0.862,
+            "total_params": "2.206.852",
+            "trainable_params": "2.206.852",
+            "non_trainable_params": "0",
         },
         {
             "name": "4_preproc_effnetb1retrained_dense128",
@@ -310,10 +438,18 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": True,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": True,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.992,
+            "covid_precision": 0.994,
+            "covid_recall": 0.990,
+            "average_f1": 0.962,
+            "total_params": "8.018.699",
+            "trainable_params": "7.956.644",
+            "non_trainable_params": "62.055",
         },
         {
             "name": "4_preproc_vgg16retrained_dense128",
@@ -328,14 +464,28 @@ modelisation_models = {
             "learning_rate": 0.001,
             "loss_function": "sparse_categorical_crossentropy",
             "metrics": ["accuracy"],
+            "preprocessing": True,
             "data_augmentation": False,
             "transfer_learning": True,
             "fine_tuning": True,
-            "masked": False
+            "masked": False,
+            "covid_f1": 0.956,
+            "covid_precision": 0.950,
+            "covid_recall": 0.962,
+            "average_f1": 0.911,
+            "total_params": "15.371.716",
+            "trainable_params": "15.371.716",
+            "non_trainable_params": "0",
         }
     ]
 }
 
+modelisation_details = '''
+## Model performance
+After a brief description of the general model properties and, where applicable, the underlying idea, the performance and all the key results of the model are then presented in tabular and graphical form. If special or interesting results can be observed, these are then briefly highlighted and commented on.
+
+*Note: The leading number of the model name reflects the evolution step during our project. The higher the leading number, the more insights learned from the previous models are included.*
+'''
 
 ###############################
 ### Prediction page content ###
