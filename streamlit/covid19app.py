@@ -86,21 +86,21 @@ if page == 'Home':
     st.markdown(content.home_context)
     st.markdown(content.home_samples)
     st.markdown(content.home_normal)
-    st.image(os.path.join('content', 'normal.png'), caption='Healthy lungs')
+    st.image(os.path.join(streamlit_dir, 'content', 'normal.png'), caption='Healthy lungs')
     st.markdown(content.home_viral_pneumonia)
-    st.image(os.path.join('content', 'viral_pneumonia.png'), caption='Viral pneumonia')
+    st.image(os.path.join(streamlit_dir, 'content', 'viral_pneumonia.png'), caption='Viral pneumonia')
     st.markdown(content.home_lung_opacity)
-    st.image(os.path.join('content', 'lung_opacity.png'), caption='Lung opacity')
+    st.image(os.path.join(streamlit_dir, 'content', 'lung_opacity.png'), caption='Lung opacity')
     st.markdown(content.home_covid)
-    st.image(os.path.join('content', 'covid.png'), caption='Covid-19')
+    st.image(os.path.join(streamlit_dir, 'content', 'covid.png'), caption='Covid-19')
 
 elif page == 'Analysis':
 
     st.markdown(content.analysis_structure_1)
-    st.image(os.path.join('content', 'class_distribution.png'), caption='Class distribution')
+    st.image(os.path.join(streamlit_dir, 'content', 'class_distribution.png'), caption='Class distribution')
     st.markdown(content.analysis_structure_2)
     st.markdown(content.analysis_masking)
-    st.image(os.path.join('content', 'masking.png'), caption='Image masking')
+    st.image(os.path.join(streamlit_dir, 'content', 'masking.png'), caption='Image masking')
     st.markdown(content.analysis_structure_3)
     st.markdown(content.analysis_challenges)
     st.markdown(content.analysis_biases)
@@ -125,7 +125,7 @@ elif page == 'Modelisation':
     model_list = sorted(model_list)
     selected_model = st.session_state.get('model_detail') # Returns None, if never selected
     selected_model = st.selectbox('Select a model:', model_list, index=model_list.index(selected_model) if selected_model in model_list else None)
-    if selected_model is not None:        
+    if selected_model is not None:
         st.session_state['model_detail'] = selected_model
 
         # We show the model description, the loss and accuracy curves, 
@@ -134,7 +134,7 @@ elif page == 'Modelisation':
 
         # We simply show the compiled PDF as the model report
         pdf_filename = selected_model + '.pdf'
-        display_pdf(os.path.join('content', pdf_filename))
+        display_pdf(os.path.join(streamlit_dir, 'content', pdf_filename))
 
     st.markdown(content.modelisation_learnings)
 
