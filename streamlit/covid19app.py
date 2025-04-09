@@ -121,19 +121,16 @@ elif page == 'Modelisation':
     # Individual model summaries
     st.markdown(content.modelisation_details)
 
-    model_list = df_models['name'].tolist()
-    model_list = sorted(model_list)
-    selected_model = st.session_state.get('model_detail') # Returns None, if never selected
-    selected_model = st.selectbox('Select a model:', model_list, index=model_list.index(selected_model) if selected_model in model_list else None)
-    if selected_model is not None:
-        st.session_state['model_detail'] = selected_model
-
+    model_list_detail = df_models['name'].tolist()
+    model_list_detail = sorted(model_list_detail)
+    selected_model_detail = st.selectbox('Select a model:', model_list_detail, key='model_detail')
+    if selected_model_detail is not None:
         # We show the model description, the loss and accuracy curves, 
         # the performance report on the validation dataset, and the confusion matrix
-        st.write(f'You selected: {selected_model}')
+        st.write(f'You selected: {selected_model_detail}')
 
         # We simply show the compiled PDF as the model report
-        pdf_filename = selected_model + '.pdf'
+        pdf_filename = selected_model_detail + '.pdf'
         display_pdf(os.path.join(streamlit_dir, 'content', pdf_filename))
 
     st.markdown(content.modelisation_learnings)
@@ -155,8 +152,8 @@ elif page == 'Model selection':
         st.stop()
 
     # Load the models folder
-    model_list = os.listdir(MODEL_FOLDER)
-    model_names = [model_filename.split('.')[0] for model_filename in model_list if model_filename.endswith('.keras')]
+    model_file_list = os.listdir(MODEL_FOLDER)
+    model_names = [model_filename.split('.')[0] for model_filename in model_file_list if model_filename.endswith('.keras')]
     model_names = sorted(model_names)
 
     # Check if we have models in the folder
@@ -165,23 +162,19 @@ elif page == 'Model selection':
         st.stop()
 
     # Let the user select one or preset it with the last selected one
-    selected_model = st.session_state.get('model_name') # Returns None, if never selected
-    selected_model = st.selectbox('Select a model for prediction:', model_names, index=model_names.index(selected_model) if selected_model in model_names else None)
-    if selected_model is None:
+    selected_model_name = st.selectbox('Select a model for prediction:', model_names, key='model_name')
+    if selected_model_name is None:
         st.stop()
 
-    st.write(f'You selected: {selected_model}')
-
     # Load the selected model
-    model = ts.keras.models.load_model(os.path.join(MODEL_FOLDER, selected_model + '.keras'))
+    model = ts.keras.models.load_model(os.path.join(MODEL_FOLDER, selected_model_name + '.keras'))
     st.write('Model loaded successfully.')
     st.write('Model summary:')
     df = pred.model_summary_to_df(model)
     st.write(df)
 
     # Save it in streamlit session state
-    classes = classes_2 if '2-classes' in selected_model else classes_4
-    st.session_state['model_name'] = selected_model
+    classes = classes_2 if '2-classes' in selected_model_name else classes_4
     st.session_state['model'] = model
     st.session_state['classes'] = classes
 

@@ -1,8 +1,7 @@
-import os
 import io
 import numpy as np
 import pandas as pd
-import urllib
+import requests
 from PIL import Image
 import matplotlib.pyplot as plt
 
@@ -15,7 +14,6 @@ import streamlit as st
 
 # Function to extract model summary as a DataFrame
 def model_summary_to_df(model):
-    import io
 
     # Redirect sys.stdout to capture model.summary() output
     stream = io.StringIO()
@@ -41,36 +39,48 @@ def model_summary_to_df(model):
 
 
 def load_image_from_file(uploaded_file):
-    image_raw = Image.open(uploaded_file)
-    # Convert to grayscale, because all our models are trained on grayscale images
-    image_raw = image_raw.convert("L")  # Single-channel grayscale
-    image_raw = image_raw.convert('RGB')  # Convert back to RGB for model compatibility
-    image_decoded = np.array(image_raw)
-    return image_decoded
+    # Load file as raw bytes
+    image_bytes = tf.io.read_file(uploaded_file)
+    # Decode the image into a grayscale tensor
+    image = tf.image.decode_image(image_bytes, channels=1)
+    return image.numpy()
 
 
 def load_image_from_url(url):
-    resp = urllib.request.urlopen(url)
-    img_bytes = resp.read()  # Raw bytes
-    img_decoded = Image.open(io.BytesIO(img_bytes)).convert("RGB") 
-    return img_decoded
+    # Load file as raw bytes
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise ValueError(f"Failed to fetch image from URL. HTTP status code: {response.status_code}")
+    image_bytes = response.content
+    # Decode the image into a grayscale tensor
+    image = tf.image.decode_image(image_bytes, channels=1)
+    return image.numpy()
 
 
-def prepare_image_for_model(image, model_name, model):
+def prepare_image_for_model(image, model_name, model, normalize = False):
     # Copy the image to avoid overwriting
-    img = image.copy()
+    img_tf = tf.convert_to_tensor(image.copy())
+    channels = model.input_shape[-1]
+    target_size = model.input_shape[1:3]
 
-    # Make grayscale if model requires it
-#    st.write(f'Model input shape is: {model.input_shape}')
-    if model.input_shape[-1] == 1:
-        st.write(f'Converting image to grayscale for model {model_name}')
-        img = tf.image.rgb_to_grayscale(img) if img.shape[-1] == 3 else img  # Convert if needed
+    # Ensure 3D shape (H, W, C)
+    if img_tf.ndim == 2:  # Grayscale (H, W)
+        img_tf = tf.expand_dims(img_tf, axis=-1)  # (H, W, 1)
 
-    # Resize according to the models input shape
-#    st.write(f'Resizing for model {model_name} to input_shape: {model.input_shape[1:3]}')
-    img = tf.image.resize(img, size=model.input_shape[1:3])
+    # Convert grayscale to RGB if needed
+    if img_tf.shape[-1] == 1 and channels == 3:
+        img_tf = tf.image.grayscale_to_rgb(img_tf)
+    elif img_tf.shape[-1] == 3 and channels == 1:
+        img_tf = tf.image.rgb_to_grayscale(img_tf)
 
-    return img
+    # Resize
+    img_tf = tf.image.resize(img_tf, target_size)
+
+    # Normalize
+    if normalize:
+        img_tf = img_tf / 255.0
+
+    return img_tf
 
 
 # Note: the predefined class-names are the usual order, when reading in the dataset, but be careful!
