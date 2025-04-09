@@ -1,8 +1,8 @@
 import os
+import io
 import numpy as np
 import pandas as pd
 import urllib
-import cv2
 from PIL import Image
 import matplotlib.pyplot as plt
 
@@ -51,8 +51,8 @@ def load_image_from_file(uploaded_file):
 
 def load_image_from_url(url):
     resp = urllib.request.urlopen(url)
-    img_raw = np.asarray(bytearray(resp.read()), dtype='uint8')
-    img_decoded = cv2.imdecode(img_raw, -1)
+    img_bytes = resp.read()  # Raw bytes
+    img_decoded = Image.open(io.BytesIO(img_bytes)).convert("RGB") 
     return img_decoded
 
 

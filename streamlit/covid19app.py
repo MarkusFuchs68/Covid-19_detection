@@ -10,7 +10,7 @@ import tensorflow as ts
 import os
 import sys
 # Add the "streamlit" folder to the system path
-streamlit_dir = os.path.join(os.path.dirname(__file__), 'streamlit')
+streamlit_dir = os.path.dirname(__file__)
 sys.path.append(streamlit_dir)
 
 import base64
