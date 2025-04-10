@@ -95,8 +95,8 @@ elif page == 'Modelisation':
     df_models = pd.DataFrame(content.modelisation_model_summary)
 
     # and rearrange the column order to our wishes
-    df_model_summary = df_models[content.modelisation_summary_columns]
-    st.write(df_model_summary)
+    df_models_summary = df_models[content.modelisation_summary_columns]
+    st.dataframe(df_models_summary, use_container_width=False)
 
     # Individual model summaries
     st.markdown(content.modelisation_details)
@@ -169,7 +169,7 @@ elif page == 'Model selection':
     st.write('Model loaded successfully.')
     st.write('Model summary:')
     df = pred.model_summary_to_df(model)
-    st.write(df)
+    st.dataframe(df, use_container_width=False)
 
     # Save it in streamlit session state
     classes = classes_2 if '2-classes' in selected_model_name else classes_4
@@ -229,9 +229,9 @@ elif page == 'Prediction':
     # Prepare the image for prediction in the selected model
     img_prepared = pred.prepare_image_for_model(image, model_name, model)
 
-    # Predict the prepared image
+    # Predict the prepared image and show the result as table
     pred_df = pred.predict_image(img_prepared, model_name, model, classes)
-    st.write(pred_df)
+    st.dataframe(pred_df, use_container_width=False)
 
     # Optionally show a Grad-CAM
     st.write('Check the following checkbox to show a Grad-CAM of the prediction:')
