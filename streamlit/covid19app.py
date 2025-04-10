@@ -175,15 +175,16 @@ elif page == 'Model selection':
     classes = classes_2 if '2-classes' in selected_model_name else classes_4
     st.session_state['model'] = model
     st.session_state['classes'] = classes
+    st.session_state['selected_model'] = selected_model_name
 
 elif page == 'Prediction':
 
     # First check if we have models loaded
-    if ('model' not in st.session_state) or ('model_name' not in st.session_state):
+    if ('model' not in st.session_state):
         st.error('No model loaded. Please select a model first.')
         st.stop()
 
-    model_name = st.session_state['model_name']
+    model_name = st.session_state['selected_model']
     model = st.session_state['model']
     classes = st.session_state['classes']
 
