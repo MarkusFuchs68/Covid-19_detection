@@ -39,20 +39,30 @@ def model_summary_to_df(model):
 
 def load_image_from_file(uploaded_file):
     # Load file as raw bytes
-    image_bytes = tf.io.read_file(uploaded_file)
+    image_bytes = uploaded_file.read()
     # Decode the image into a grayscale tensor
-    image = tf.image.decode_image(image_bytes, channels=1)
+    try:
+        image = tf.image.decode_image(image_bytes, channels=1)
+    except Exception as e:
+        st.error(f"Error during decoding the image: {e}")
+        return None
     return image.numpy()
 
 
 def load_image_from_url(url):
     # Load file as raw bytes
-    response = requests.get(url)
-    if response.status_code != 200:
-        raise ValueError(f"Failed to fetch image from URL. HTTP status code: {response.status_code}")
+    try:
+        response = requests.get(url)
+    except Exception:
+        st.error(f"Failed to load image from URL. Please check proper URL.")
+        return None
     image_bytes = response.content
     # Decode the image into a grayscale tensor
-    image = tf.image.decode_image(image_bytes, channels=1)
+    try:
+        image = tf.image.decode_image(image_bytes, channels=1)
+    except Exception as e:
+        st.error(f"Error during decoding the image: {e}")
+        return None
     return image.numpy()
 
 

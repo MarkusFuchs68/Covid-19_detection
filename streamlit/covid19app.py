@@ -1,13 +1,9 @@
+import select
 import streamlit as st
 import pandas as pd
-import base64
 import st_content as content
 import st_prediction as pred
-# Comment this out, if you make changes to the files, while the app is running
-#import importlib
-#importlib.reload(content)
-#importlib.reload(pred)
-
+import tensorflow as ts
 import os
 import sys
 # Add the "streamlit" folder to the system path
@@ -97,10 +93,10 @@ elif page == 'Modelisation':
 
     # Read in our model summary
     df_models = pd.DataFrame(content.modelisation_model_summary)
-    
+
     # and rearrange the column order to our wishes
     df_model_summary = df_models[content.modelisation_summary_columns]
-    st.dataframe(df_model_summary)
+    st.write(df_model_summary)
 
     # Individual model summaries
     st.markdown(content.modelisation_details)
@@ -111,7 +107,7 @@ elif page == 'Modelisation':
     # This lists all our model names
     model_list_detail = df_models['name'].tolist()
     model_list_detail = sorted(model_list_detail)
-    selected_model_detail = st.selectbox('Select a model:', model_list_detail, key='model_detail')
+    selected_model_detail = st.selectbox("Select a model:", model_list_detail, key='model_detail')
     if selected_model_detail is not None:
         # We show the model description, the loss and accuracy curves, 
         # the performance report on the validation dataset, and the confusion matrix
@@ -143,8 +139,7 @@ elif page == 'Model selection':
         st.write('Downloading models from Google Drive...')
         st.write('Please wait...')
         download_models()
-        st.write('Models downloaded successfully. Refreshing page...')
-        st.rerun()
+        st.write('Models downloaded successfully.')
 
     # Check if the models folder exists
     if not os.path.isdir(MODEL_FOLDER):
@@ -162,7 +157,9 @@ elif page == 'Model selection':
         st.stop()
 
     # Let the user select one or preset it with the last selected one
-    selected_model_name = st.selectbox('Select a model for prediction:', model_names, key='model_name')
+    selected_model_name = st.selectbox('Select a model for prediction:',
+                                       model_names,
+                                       key='model_name')
     if selected_model_name is None:
         st.stop()
 
@@ -181,7 +178,7 @@ elif page == 'Model selection':
 elif page == 'Prediction':
 
     # First check if we have models loaded
-    if 'model' not in st.session_state:
+    if ('model' not in st.session_state) or ('model_name' not in st.session_state):
         st.error('No model loaded. Please select a model first.')
         st.stop()
 
@@ -194,7 +191,7 @@ elif page == 'Prediction':
     loading_type = 0
     st.markdown(content.prediction_note)
     url_input, divider, file_input = st.columns([3, 1, 3])
-    
+
     with divider:
         st.markdown(content.prediction_or, unsafe_allow_html=True)
 
@@ -220,9 +217,9 @@ elif page == 'Prediction':
 
     # Predict using the model
     if loading_type == 1:
-        st.write('Predicting the following image from URL...')
+        st.write('Predicting the following image from URL with model:', model_name)
     elif loading_type == 2:
-        st.write('Predicting the following image from file...')
+        st.write('Predicting the following image from file with model:', model_name)
 
     # Show the loaded image
     st.image(image, width=300)
@@ -232,7 +229,7 @@ elif page == 'Prediction':
 
     # Predict the prepared image
     pred_df = pred.predict_image(img_prepared, model_name, model, classes)
-    st.dataframe(pred_df)
+    st.write(pred_df)
 
     # Optionally show a Grad-CAM
     st.write('Check the following checkbox to show a Grad-CAM of the prediction:')
