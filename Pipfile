@@ -1,0 +1,31 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+numpy = "*"
+matplotlib = "*"
+scikit-learn = "*"
+seaborn = {extras = ["stats"], version = "*"}
+ipywidgets = "*"
+scikit-plot = "*"
+opencv-python = "*"
+bqplot = "*"
+plotly = "*"
+markdown = "*"
+tensorflow = "*"
+xgboost = "*"
+ipykernel = "*"
+kagglehub = "*"
+imblearn = "*"
+openpyxl = "*"
+streamlit = "*"
+gdown = "*"
+
+[dev-packages]
+ipykernel = "*"
+
+[requires]
+python_version = "*"
