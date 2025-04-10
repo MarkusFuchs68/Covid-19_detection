@@ -139,7 +139,8 @@ elif page == 'Model selection':
         st.write('Downloading models from Google Drive...')
         st.write('Please wait...')
         download_models()
-        st.write('Models downloaded successfully.')
+        st.write('Models downloaded successfully. Refreshing page...')
+        st.rerun()
 
     # Check if the models folder exists
     if not os.path.isdir(MODEL_FOLDER):
