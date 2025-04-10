@@ -129,8 +129,9 @@ def model_summary_to_df(model):
         if len(parts) >= 3:
             layer_nametype = parts[0]
             output_shape = parts[1]
-            param_count = parts[-1]
-            data.append([layer_nametype, output_shape, param_count])
+            param_count = parts[2]
+            if (len(layer_nametype.strip()) > 0 or len(output_shape.strip()) > 0 or len(param_count.strip()) > 0):
+                data.append([layer_nametype, output_shape, param_count])
 
     # Create DataFrame
     df = pd.DataFrame(data, columns=["Layer Name (type)", "Output Shape", "Param Count"])
