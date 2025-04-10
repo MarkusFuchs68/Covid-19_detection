@@ -189,296 +189,294 @@ modelisation_summary_columns = [
             "non_trainable_params",
 ]
 
-modelisation_model_summary = {
-    "models": [
-        {
-            "name": "2_dense121_2-classes_dense512_masked",
-            "description": "Densenet121 model with imagenet pretrained weights",
-            "dense_layers": [1024, 512, 2],
-            "dropout": 0.2,
-            "classes": ['Normal', 'COVID'],
-            "epochs": 20,
-            "early_stopping": 11,
-            "batch_size": 16,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": True,
-            "covid_f1": 0.428,
-            "covid_precision": 0.273,
-            "covid_recall": 0.999,
-            "average_f1": 0.117,
-            "total_params": "8.612.930",
-            "trainable_params": "1.575.426",
-            "non_trainable_params": "7.037.504",
-        },
-        {
-            "name": "2_vgg16_2-classes_dense512_masked",
-            "description": "VGG16 model with imagenet pretrained weights",
-            "dense_layers": [1024, 512, 2],
-            "dropout": 0.2,
-            "classes": ['Normal', 'COVID'],
-            "epochs": 20,
-            "early_stopping": 6,
-            "batch_size": 16,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": True,
-            "covid_f1": 0.840,
-            "covid_precision": 0.805,
-            "covid_recall": 0.880,
-            "average_f1": 0.910,
-            "total_params": "15.765.826",
-            "trainable_params": "1.051.138",
-            "non_trainable_params": "14.714.688",
-        },
-        {
-            "name": "2a_vgg16_4-classes_dense512_masked",
-            "description": "VGG16 model with imagenet pretrained weights",
-            "dense_layers": [1024, 512, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 17,
-            "batch_size": 16,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": True,
-            "covid_f1": 0.752,
-            "covid_precision": 0.713,
-            "covid_recall": 0.797,
-            "average_f1": 0.853,
-            "total_params": "15.766.852",
-            "trainable_params": "1.052.164",
-            "non_trainable_params": "14.714.688",
-        },
-        {
-            "name": "3a_vgg16_dense512",
-            "description": "VGG16 model with imagenet pretrained weights",
-            "dense_layers": [1024, 512, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 12,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": False,
-            "covid_f1": 0.935,
-            "covid_precision": 0.933,
-            "covid_recall": 0.937,
-            "average_f1": 0.913,
-            "total_params": "15.766.852",
-            "trainable_params": "1.052.164",
-            "non_trainable_params": "14.714.688",
-        },
-        {
-            "name": "3b_vgg16_augmented_dense512",
-            "description": "VGG16 model with imagenet pretrained weights",
-            "dense_layers": [1024, 512, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 25,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": True,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": False,
-            "covid_f1": 0.517,
-            "covid_precision": 0.510,
-            "covid_recall": 0.523,
-            "average_f1": 0.618,
-            "total_params": "15.766.852",
-            "trainable_params": "1.052.164",
-            "non_trainable_params": "14.714.688",
-        },
-        {
-            "name": "3c_vgg16_dense128",
-            "description": "VGG16 model with imagenet pretrained weights",
-            "dense_layers": [1024, 128, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 12,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": False,
-            "covid_f1": 0.930,
-            "covid_precision": 0.924,
-            "covid_recall": 0.937,
-            "average_f1": 0.909,
-            "total_params": "15.371.716",
-            "trainable_params": "657.028",
-            "non_trainable_params": "14.714.688",
-        },
-        {
-            "name": "3d_efficientnetb1_dense128",
-            "description": "EfficientNetB1 model with imagenet pretrained weights",
-            "dense_layers": [1024, 128, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 18,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": False,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": False,
-            "masked": False,
-            "covid_f1": 0.954,
-            "covid_precision": 0.959,
-            "covid_recall": 0.950,
-            "average_f1": 0.919,
-            "total_params": "8.018.699",
-            "trainable_params": "1.443.460",
-            "non_trainable_params": "6.575.239",
-        },
-        {
-            "name": "4_25ep_medparam_4xconv2d_dense128",
-            "description": "4xConvolutional layer model with medical parameters",
-            "dense_layers": [1024, 128, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 25,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": None,
-            "data_augmentation": False,
-            "transfer_learning": False,
-            "fine_tuning": False,
-            "masked": False,
-            "covid_f1": 0.946,
-            "covid_precision": 0.934,
-            "covid_recall": 0.958,
-            "average_f1": 0.862,
-            "total_params": "2.206.852",
-            "trainable_params": "2.206.852",
-            "non_trainable_params": "0",
-        },
-        {
-            "name": "4_50ep_medparam_4xconv2d_dense128",
-            "description": "4xConvolutional layer model with medical parameters",
-            "dense_layers": [1024, 128, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 50,
-            "early_stopping": 50,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": None,
-            "data_augmentation": False,
-            "transfer_learning": False,
-            "fine_tuning": False,
-            "masked": False,
-            "covid_f1": 0.947,
-            "covid_precision": 0.935,
-            "covid_recall": 0.961,
-            "average_f1": 0.862,
-            "total_params": "2.206.852",
-            "trainable_params": "2.206.852",
-            "non_trainable_params": "0",
-        },
-        {
-            "name": "4_preproc_effnetb1retrained_dense128",
-            "description": "EfficientNetB1 model with imagenet pretrained weights",
-            "dense_layers": [1024, 128, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 15,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": True,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": True,
-            "masked": False,
-            "covid_f1": 0.992,
-            "covid_precision": 0.994,
-            "covid_recall": 0.990,
-            "average_f1": 0.962,
-            "total_params": "8.018.699",
-            "trainable_params": "7.956.644",
-            "non_trainable_params": "62.055",
-        },
-        {
-            "name": "4_preproc_vgg16retrained_dense128",
-            "description": "VGG16 model with imagenet pretrained weights",
-            "dense_layers": [1024, 128, 4],
-            "dropout": 0.2,
-            "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
-            "epochs": 25,
-            "early_stopping": 16,
-            "batch_size": 32,
-            "optimizer": "Adam",
-            "learning_rate": 0.001,
-            "loss_function": "sparse_categorical_crossentropy",
-            "metrics": ["accuracy"],
-            "preprocessing": True,
-            "data_augmentation": False,
-            "transfer_learning": True,
-            "fine_tuning": True,
-            "masked": False,
-            "covid_f1": 0.956,
-            "covid_precision": 0.950,
-            "covid_recall": 0.962,
-            "average_f1": 0.911,
-            "total_params": "15.371.716",
-            "trainable_params": "15.371.716",
-            "non_trainable_params": "0",
-        }
-    ]
-}
+modelisation_model_summary = [
+    {
+        "name": "2_dense121_2-classes_dense512_masked",
+        "description": "Densenet121 model with imagenet pretrained weights",
+        "dense_layers": [1024, 512, 2],
+        "dropout": 0.2,
+        "classes": ['Normal', 'COVID'],
+        "epochs": 20,
+        "early_stopping": 11,
+        "batch_size": 16,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": True,
+        "covid_f1": 0.428,
+        "covid_precision": 0.273,
+        "covid_recall": 0.999,
+        "average_f1": 0.117,
+        "total_params": "8.612.930",
+        "trainable_params": "1.575.426",
+        "non_trainable_params": "7.037.504",
+    },
+    {
+        "name": "2_vgg16_2-classes_dense512_masked",
+        "description": "VGG16 model with imagenet pretrained weights",
+        "dense_layers": [1024, 512, 2],
+        "dropout": 0.2,
+        "classes": ['Normal', 'COVID'],
+        "epochs": 20,
+        "early_stopping": 6,
+        "batch_size": 16,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": True,
+        "covid_f1": 0.840,
+        "covid_precision": 0.805,
+        "covid_recall": 0.880,
+        "average_f1": 0.910,
+        "total_params": "15.765.826",
+        "trainable_params": "1.051.138",
+        "non_trainable_params": "14.714.688",
+    },
+    {
+        "name": "2a_vgg16_4-classes_dense512_masked",
+        "description": "VGG16 model with imagenet pretrained weights",
+        "dense_layers": [1024, 512, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 17,
+        "batch_size": 16,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": True,
+        "covid_f1": 0.752,
+        "covid_precision": 0.713,
+        "covid_recall": 0.797,
+        "average_f1": 0.853,
+        "total_params": "15.766.852",
+        "trainable_params": "1.052.164",
+        "non_trainable_params": "14.714.688",
+    },
+    {
+        "name": "3a_vgg16_dense512",
+        "description": "VGG16 model with imagenet pretrained weights",
+        "dense_layers": [1024, 512, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 12,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": False,
+        "covid_f1": 0.935,
+        "covid_precision": 0.933,
+        "covid_recall": 0.937,
+        "average_f1": 0.913,
+        "total_params": "15.766.852",
+        "trainable_params": "1.052.164",
+        "non_trainable_params": "14.714.688",
+    },
+    {
+        "name": "3b_vgg16_augmented_dense512",
+        "description": "VGG16 model with imagenet pretrained weights",
+        "dense_layers": [1024, 512, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 25,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": True,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": False,
+        "covid_f1": 0.517,
+        "covid_precision": 0.510,
+        "covid_recall": 0.523,
+        "average_f1": 0.618,
+        "total_params": "15.766.852",
+        "trainable_params": "1.052.164",
+        "non_trainable_params": "14.714.688",
+    },
+    {
+        "name": "3c_vgg16_dense128",
+        "description": "VGG16 model with imagenet pretrained weights",
+        "dense_layers": [1024, 128, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 12,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": False,
+        "covid_f1": 0.930,
+        "covid_precision": 0.924,
+        "covid_recall": 0.937,
+        "average_f1": 0.909,
+        "total_params": "15.371.716",
+        "trainable_params": "657.028",
+        "non_trainable_params": "14.714.688",
+    },
+    {
+        "name": "3d_efficientnetb1_dense128",
+        "description": "EfficientNetB1 model with imagenet pretrained weights",
+        "dense_layers": [1024, 128, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 18,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": False,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": False,
+        "masked": False,
+        "covid_f1": 0.954,
+        "covid_precision": 0.959,
+        "covid_recall": 0.950,
+        "average_f1": 0.919,
+        "total_params": "8.018.699",
+        "trainable_params": "1.443.460",
+        "non_trainable_params": "6.575.239",
+    },
+    {
+        "name": "4_25ep_medparam_4xconv2d_dense128",
+        "description": "4xConvolutional layer model with medical parameters",
+        "dense_layers": [1024, 128, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 25,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": None,
+        "data_augmentation": False,
+        "transfer_learning": False,
+        "fine_tuning": False,
+        "masked": False,
+        "covid_f1": 0.946,
+        "covid_precision": 0.934,
+        "covid_recall": 0.958,
+        "average_f1": 0.862,
+        "total_params": "2.206.852",
+        "trainable_params": "2.206.852",
+        "non_trainable_params": "0",
+    },
+    {
+        "name": "4_50ep_medparam_4xconv2d_dense128",
+        "description": "4xConvolutional layer model with medical parameters",
+        "dense_layers": [1024, 128, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 50,
+        "early_stopping": 50,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": None,
+        "data_augmentation": False,
+        "transfer_learning": False,
+        "fine_tuning": False,
+        "masked": False,
+        "covid_f1": 0.947,
+        "covid_precision": 0.935,
+        "covid_recall": 0.961,
+        "average_f1": 0.862,
+        "total_params": "2.206.852",
+        "trainable_params": "2.206.852",
+        "non_trainable_params": "0",
+    },
+    {
+        "name": "4_preproc_effnetb1retrained_dense128",
+        "description": "EfficientNetB1 model with imagenet pretrained weights",
+        "dense_layers": [1024, 128, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 15,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": True,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": True,
+        "masked": False,
+        "covid_f1": 0.992,
+        "covid_precision": 0.994,
+        "covid_recall": 0.990,
+        "average_f1": 0.962,
+        "total_params": "8.018.699",
+        "trainable_params": "7.956.644",
+        "non_trainable_params": "62.055",
+    },
+    {
+        "name": "4_preproc_vgg16retrained_dense128",
+        "description": "VGG16 model with imagenet pretrained weights",
+        "dense_layers": [1024, 128, 4],
+        "dropout": 0.2,
+        "classes": ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia'],
+        "epochs": 25,
+        "early_stopping": 16,
+        "batch_size": 32,
+        "optimizer": "Adam",
+        "learning_rate": 0.001,
+        "loss_function": "sparse_categorical_crossentropy",
+        "metrics": ["accuracy"],
+        "preprocessing": True,
+        "data_augmentation": False,
+        "transfer_learning": True,
+        "fine_tuning": True,
+        "masked": False,
+        "covid_f1": 0.956,
+        "covid_precision": 0.950,
+        "covid_recall": 0.962,
+        "average_f1": 0.911,
+        "total_params": "15.371.716",
+        "trainable_params": "15.371.716",
+        "non_trainable_params": "0",
+    }
+]
 
 modelisation_details = '''
 ## Model performance
@@ -486,6 +484,161 @@ After a brief description of the general model properties and, where applicable,
 
 *Note: The leading number of the model name reflects the evolution step during our project. The higher the leading number, the more insights learned from the previous models are included.*
 '''
+
+modelisation_model_details = [
+    {
+        'name': '2_dense121_2-classes_dense512_masked',
+        'description': '''
+**Description and underlying idea:**
+
+As seen on the Kaggle website, many people had good results with transfer learning. Hence we are trying as well here. Especially for the Densenet121 exists a dedicated pretrained parameter set trained for the recognition of medical diseases. Also we had the idea that masking the images might help the model to train solely on lung details. Side note: We try first on only the Covid and Normal class and enhance the classification later.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+Unfortunately the Densenet121 based model didn’t perform at all. Even with the medical parameter-set there was even less performance. We decided to not experiment with Densenet further.
+'''
+    },
+    {
+        'name': '2_vgg16_2-classes_dense512_masked',
+        'description': '''
+**Description and underlying idea:**
+
+According to the Kaggel webpage VGG16 seems to be a promising candidate for classifying x-ray-images. We applied this to the masked images and classifying only the Covid and Normal class in our early experiments.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+The performance is much better than the Densenet121. This encouraged us to experiment further with the VGG16 approach. Btw, we can see from the training history difference between training and evaluation dataset, that the model overfitted. We need to take care about this in our further experiments.
+'''
+    },
+    {
+        'name': '2a_vgg16_4-classes_dense512_masked',
+        'description': '''
+**Description and underlying idea:**
+
+We tried only classification of the Covid and Normal class so far, now we want to see how the model performs on all classes.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+Performance is not so bad for these early models, but still far away from the performance we aim for (at least > 0.95 f1 score).
+'''
+    },
+    {
+        'name': '3a_vgg16_dense512',
+        'description': '''
+**Description and underlying idea:**
+
+On the advice of our group mentor, we train the models exclusively without the masks provided. The advantage of this is that the model can be applied directly to unmasked X-ray images, which makes it easier to use. As in base-model 2a), dense layers of the form 1024 -> 512 -> 4 are used here.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+The results already show a significant improvement compared to the first models. The Covid class in particular has an F1 score of 0.925. But we see also quite some overfitting in the training history by the difference of training and validation dataset accuracy.
+In addition, we also recognize, that masking the images has more a negative, than a positive effect. We analyzed this with a Grad-CAM, which clearly identified that the model learns on lung edges, instead on lung details.
+'''
+    },
+    {
+        'name': '3b_vgg16_augmented_dense512',
+        'description': '''
+**Description and underlying idea:**
+
+In this model, data augmentation is now applied for the first time taking the model 3a_vgg_dense512 as performance baseline in order to observe the effects on the model performance. 
+''',
+        'conclusion': '''
+**Conclusion**:
+
+Unfortunately, the results are quite poor. It is particularly noticeable that the test accuracy is significantly lower than the train accuracy, so the model well overfitted a lot. Based on the learning curve, it can be observed that the model reaches its final value early on and stagnates from then on. 
+'''
+    },
+    {
+        'name': '3c_vgg16_dense128',
+        'description': '''
+**Description and underlying idea:**
+
+In contrast to the previous model 3a_vgg16_dense512, the structure of the dense-layers is of the form 1024 -> 128 -> 4 in order to test if more balanced steps are better for model performance. 
+''',
+        'conclusion': '''
+**Conclusion**:
+
+The results of the Covid class have improved once again. It seems that dense layers of the form 1024 -> 128 -> 4 perform better than 1024 -> 512 -> 4. However, we can also see some slight overfitting on this model.
+Following another hint from our project mentor, we tested this model on other random pictures from the Internet. 
+'''
+    },
+    {
+        'name': '3d_efficientnetb1_dense128',
+        'description': '''
+**Description and underlying idea:**
+
+This is a first modelling approach with an EfficientNetB1 base-model. The dense-layers were chosen in the form 1024 -> 128 -> 4 because, as seen, this has proven to be an improvement. 
+''',
+        'conclusion': '''
+**Conclusion**:
+
+Although the results are quite good, the model performs poorly when tested on other random pictures from the Internet. We can also see some overfitting from the training history.
+'''
+    },
+    {
+        'name': '4_25ep_medparam_4xconv2d_dense128',
+        'description': '''
+**Description and underlying idea:**
+
+As a strategy for the first Convolutional Layer we use medically relevant kernels: 
+- sobel filters → detect lung boundaries 
+- laplacian filters → highlight nodules and opacities
+- gabor filters → capture texture changes (useful for pneumonia, fibrosis)
+- gaussian filters → enhance image contrast
+
+Small noise and transformations to all filters were applied to ensure kernel diversity.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+The training history shows, that there is still potential for further learning. In the next model 4_50ep_medparam_4xconv2d_dense128 we have let the model further trained. However, the prediction performance is already not too bad. Also the presetting with medical convolutional kernels seemed to had not really an effect on the performance.
+'''
+    },
+    {
+        'name': '4_50ep_medparam_4xconv2d_dense128',
+        'description': '''
+**Description and underlying idea:**
+
+This model is the same as 4_25ep_medparam_4xconv2d_dense128, however we let again run the training for another 25 epochs with an even more reduced learning rate down to 1e-6.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+For a simple baseline model, which has never seen images, it performs quite good. However, we can clearly see from the gap between accuracy on train and validation dataset, that the model has overfitted a lot.
+'''
+    },
+    {
+        'name': '4_preproc_effnetb1retrained_dense128',
+        'description': '''
+**Description and underlying idea:**
+
+As another idea of using transfer learning, we used the EfficientNetB1 pretrained model and let it train completely on all layers. The model includes also the EfficientNetB1 preprocessing, so that it can be used on x-ray images directly.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+With an Covid F1 score of 0.99 and average F1 score of 0.96, this model is the best we have found so far. It also performs well when tested on random images from the internet. However, we see that the accuracy quite differs between training and validation dataset, which implies that this model likely has overfitted on the training data.
+'''
+    },
+    {
+        'name': '4_preproc_vgg16retrained_dense128',
+        'description': '''
+**Description and underlying idea:**
+
+In this model, we included the VGG16 preprocessing into the model, so that the model can be applied to x-ray images directly. The model was then trained on all layers including the underlying VGG16 pretrained model.
+''',
+        'conclusion': '''
+**Conclusion**:
+
+The performance of the model is quite good. Training and validation accuracy are similar, so there is not much overfitting.
+'''
+    },
+]
+
 
 modelisation_learnings = '''
 ## Key Learnings and Recommendations

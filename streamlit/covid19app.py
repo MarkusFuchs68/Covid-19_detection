@@ -1,18 +1,5 @@
 import streamlit as st
-
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-import tensorflow as ts
-
-import os
-import sys
-# Add the "streamlit" folder to the system path
-streamlit_dir = os.path.dirname(__file__)
-sys.path.append(streamlit_dir)
-
 import base64
 import st_content as content
 import st_prediction as pred
@@ -20,6 +7,12 @@ import st_prediction as pred
 #import importlib
 #importlib.reload(content)
 #importlib.reload(pred)
+
+import os
+import sys
+# Add the "streamlit" folder to the system path
+streamlit_dir = os.path.dirname(__file__)
+sys.path.append(streamlit_dir)
 
 # Definitions
 classes_4 = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
@@ -63,16 +56,6 @@ def download_models():
         progress_bar.progress(percent_complete)
 
 
-def display_pdf(file_path):
-    with open(file_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    
-    pdf_display = f"""
-        <iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="900" type="application/pdf"></iframe>
-    """
-    st.markdown(pdf_display, unsafe_allow_html=True)
-
-
 # The streamlit app code:
 st.title('Covid-19 chest X-ray image Analysis')
 
@@ -113,25 +96,42 @@ elif page == 'Modelisation':
         st.markdown(content.modelisation_variables)
 
     # Read in our model summary
-    df_models = pd.DataFrame(content.modelisation_model_summary['models'])
+    df_models = pd.DataFrame(content.modelisation_model_summary)
+    
     # and rearrange the column order to our wishes
-    df_models = df_models[content.modelisation_summary_columns]
-    st.dataframe(df_models)
+    df_model_summary = df_models[content.modelisation_summary_columns]
+    st.dataframe(df_model_summary)
 
     # Individual model summaries
     st.markdown(content.modelisation_details)
 
+    # Data for the following model detail description
+    df_model_details = pd.DataFrame(content.modelisation_model_details).set_index('name')
+
+    # This lists all our model names
     model_list_detail = df_models['name'].tolist()
     model_list_detail = sorted(model_list_detail)
     selected_model_detail = st.selectbox('Select a model:', model_list_detail, key='model_detail')
     if selected_model_detail is not None:
         # We show the model description, the loss and accuracy curves, 
         # the performance report on the validation dataset, and the confusion matrix
-        st.write(f'You selected: {selected_model_detail}')
+        st.markdown('**Model report for model:** ' + selected_model_detail)
 
-        # We simply show the compiled PDF as the model report
-        pdf_filename = selected_model_detail + '.pdf'
-        display_pdf(os.path.join(streamlit_dir, 'content', pdf_filename))
+        # The description and underlying ideas
+        st.markdown(df_model_details.loc[selected_model_detail]['description'])
+
+        # The conclusion
+        st.markdown(df_model_details.loc[selected_model_detail]['conclusion'])
+
+        # The model learning curve
+        st.markdown('**Training History:**')
+        performance_path = os.path.join(streamlit_dir, 'content', selected_model_detail + '_training.png')
+        st.image(performance_path)
+
+        # The model performance
+        st.markdown('**Performance Report / Recall normalized Confusion Matrix:**')
+        performance_path = os.path.join(streamlit_dir, 'content', selected_model_detail + '_performance.png')
+        st.image(performance_path)
 
     st.markdown(content.modelisation_learnings)
 

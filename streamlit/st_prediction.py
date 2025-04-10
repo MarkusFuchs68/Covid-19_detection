@@ -2,7 +2,6 @@ import io
 import numpy as np
 import pandas as pd
 import requests
-from PIL import Image
 import matplotlib.pyplot as plt
 
 import tensorflow as tf
@@ -111,7 +110,7 @@ def show_feature_maps(img_prepared, model_name, model):
             # We need to srict on real conv layers (not reduce, pooling, etc.)
             if isinstance(layer, Conv2D) and 'conv' in str(layer.name.lower()):
                 st.write(f'Found convolution layer: {layer.name}')
-                inner_conv_layers.append((model,layer.name))
+                inner_conv_layers.append((model, layer.name))
             elif isinstance(layer, Model):
                 st.write(f'Found inner model layer: {layer.name}')
                 inner_conv_layers.extend(get_conv_layers(layer))
@@ -125,15 +124,15 @@ def show_feature_maps(img_prepared, model_name, model):
         return
 
     # Get first layer from the model as our input definition
-    try: # Remember, the list holds tuples of model and layer name
+    try:  # Remember, the list holds tuples of model and layer name
         # If this fails, then because our model input is not defined yet
         input = conv_layers[0][0].input # take it from the model itself
-    except AttributeError: # input is not yet defined
+    except AttributeError:  # input is not yet defined
         # If it fails, we need to get the input from the first convolution layer
-        input = conv_layers[0][0].get_layer(conv_layers[0][1]).input # take it from the first layer of the model
+        input = conv_layers[0][0].get_layer(conv_layers[0][1]).input  # take it from the first layer of the model
 
     # Loop through all convolution layers
-    for j, (inner_model,layer) in enumerate(conv_layers):
+    for j, (inner_model, layer) in enumerate(conv_layers):
 
         # Create a new model with the same input as the original model but with the output
         conv_model = Model(inputs=input, outputs=inner_model.get_layer(layer).output)
