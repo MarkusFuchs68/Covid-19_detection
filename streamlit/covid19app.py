@@ -62,6 +62,15 @@ st.sidebar.title('Navigation') # Sidebar for navigation
 pages = ['Home', 'Analysis', 'Modelisation', 'Model selection', 'Prediction', 'About'] # List of pages user can choose from in the app
 page = st.sidebar.radio('Go to:', pages) # Create a radio button to navigate between pages
 
+# Handle page switches for proper reselection of selected models selectbox
+if st.session_state.get('previous_page') and (page != st.session_state['previous_page']):
+    # This sets the selected prediction model selectbox to the previous selected model
+    if st.session_state.get('selected_model'):
+        st.session_state['model_name'] = st.session_state['selected_model']
+
+# Save the current page selection as previous page for next run
+st.session_state['previous_page'] = page
+
 if page == 'Home': # If user selected the "Home" page
     # Show introductory text and explanations from content module
     st.markdown(content.home_general)
