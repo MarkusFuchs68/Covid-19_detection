@@ -237,7 +237,7 @@ elif page == 'Prediction': # If the user navigates to the "Prediction" page
 
     # Predict the prepared image and show the result as table
     pred_df = pred.predict_image(img_prepared, model_name, model, classes) # This returns a table with prediction probabilities
-    st.dataframe(pred_df, use_container_width=False) # Show the prediction table nicely formatted
+    st.table(pred_df) # Show the prediction table, while maintaining proper column widths
 
     # Optionally show a Grad-CAM
     st.write('Check the following checkbox to show a Grad-CAM of the prediction:') # Optional: checkbox to show Grad-CAM visualization
