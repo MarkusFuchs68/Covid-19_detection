@@ -13,8 +13,8 @@ import sys # For system-specific operations
 streamlit_dir = os.path.dirname(__file__)
 sys.path.append(streamlit_dir)
 
-# Define the class names (4-class and 2-class variants)
-classes_4 = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
+# Define the class names (4-class and 2-class variants) in the right index order of the models
+classes_4 = ['COVID', 'Lung Opacity', 'Normal', 'Viral Pneumonia']
 classes_2 = ['Normal', 'COVID']
 MODEL_FOLDER = os.path.join('.', 'models') # Set the folder path where models will be saved
 
@@ -237,7 +237,7 @@ elif page == 'Prediction': # If the user navigates to the "Prediction" page
 
     # Predict the prepared image and show the result as table
     pred_df = pred.predict_image(img_prepared, model_name, model, classes) # This returns a table with prediction probabilities
-    st.table(pred_df) # Show the prediction table, while maintaining proper column widths
+    st.table(pred_df) # Show the prediction table, while maintaining proper column widths by using st.table()
 
     # Optionally show a Grad-CAM
     st.write('Check the following checkbox to show a Grad-CAM of the prediction:') # Optional: checkbox to show Grad-CAM visualization

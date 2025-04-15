@@ -108,7 +108,7 @@ def predict_image(img_prepared, model_name, model, class_names): # Column name f
     pred = model.predict(img_batch)[0]
 
     # Show the probabilities of the predicted classes
-    pred_df.loc[model_name] = [class_names[np.argmax(pred)]] + pred.round(3).tolist() # Write prediction into table
+    pred_df.loc[model_name] = [class_names[np.argmax(pred)]] + pred.round(3).astype('str').tolist() # Write prediction into table
     pred_df.index.name = 'Model'
 
     # Return the prediction report
